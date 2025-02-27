@@ -1,6 +1,10 @@
 # college-credit-Checker
 For only Ritsumeikan Student
 
+> [!WARNING]
+> First Branch, Now It's only optimize for 情報理工学部
+※現在は情報理工学部の履修のみ対応です。あなたの学部に対応させたい場合は私に、該当学部の授業一覧と卒業要件がわかるデータを送信してください。
+
 > [!NOTE]
 > このプラグインが気に入ったらStarお願いします。パトロンはいつでも募集しています。
 > 開発者が現在4回生になるという事もあり、バグや不具合、学部別対応に時間を有する場合がございます。ご了承ください。

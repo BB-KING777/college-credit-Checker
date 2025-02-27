@@ -1,0 +1,39 @@
+{
+  "requirements": {
+    "ise_is": {
+      "common": {
+        "total": 124,
+        "foreignLanguage": 10,
+        "generalEducation": 14,
+        "specializedBasic": 20,
+        "specializedCommon": 22,
+        "specializedCore": 48,
+        "totalSpecialized": 100
+      },
+      "hasCourses": true,
+      "courses": {
+        "sa": {
+          "requiredCourses": ["プログラミング演習１", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３", "システムアーキテクト演習", "システムアーキテクト実験１", "システムアーキテクト実験２", "システムアーキテクト実験３"]
+        },
+        "sn": {
+          "requiredCourses": ["プログラミング演習２", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３", "セキュリティ・ネットワーク学実験１", "セキュリティ・ネットワーク学実験２", "セキュリティ・ネットワーク学実験３"]
+        },
+        "sd": {
+          "requiredCourses": ["プログラミング演習１", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３", "先端社会デザイン創成１", "先端社会デザイン創成２", "実践プログラミング演習"]
+        },
+        "ri": {
+          "requiredCourses": ["プログラミング演習１", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３", "実世界情報実験１", "実世界情報実験２", "実世界情報実験３"]
+        },
+        "mm": {
+          "requiredCourses": ["プログラミング演習１", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３", "メディア実験１", "メディア実験２"]
+        },
+        "ci": {
+          "requiredCourses": ["プログラミング演習１", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３", "知能情報学実験", "知能情報システム創成"]
+        },
+        "isse": {
+          "requiredCourses": ["プログラミング演習１", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３", "PBL １: Problem Analysis and Modeling", "PBL ２: Team-based Design", "PBL ３: Creative Design", "PBL 4: Team-based Creative Design", "PBL 5: Design Evolution"]
+        }
+      }
+    }
+  }
+}

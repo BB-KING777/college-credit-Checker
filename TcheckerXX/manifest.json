@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "立命館大学 単位チェッカー",
+  "version": "1.2",
+  "description": "立命館大学の学生向け単位充足状況チェックツール",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://cw.ritsumei.ac.jp/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://cw.ritsumei.ac.jp/campusweb/sv/main*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html", "popup.js", "popup.css", "icons/*", "data/*"],
+      "matches": ["https://cw.ritsumei.ac.jp/*"]
+    }
+  ]
+}

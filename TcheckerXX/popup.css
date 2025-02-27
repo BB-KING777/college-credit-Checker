@@ -1,0 +1,535 @@
+/* popup.css - 拡張機能のポップアップスタイル */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+
+body {
+  width: 370px;
+  min-height: 520px;
+  background-color: #f5f5f5;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* ヘッダー */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #006699;
+  margin-bottom: 12px;
+}
+
+header h1 {
+  font-size: 18px;
+  color: #006699;
+  margin: 0;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+}
+
+/* 使い方セクション */
+.instructions {
+  background-color: #f0f8ff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.instructions p {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.instructions ol {
+  padding-left: 25px;
+}
+
+.instructions li {
+  margin-bottom: 3px;
+}
+
+.notice {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  color: #333;
+}
+
+.notice.success {
+  background-color: #e6f7e6;
+  border: 1px solid #c3e6c3;
+  color: #2e7d32;
+}
+
+.notice.warning {
+  background-color: #fff8e1;
+  border: 1px solid #ffe082;
+  color: #ff8f00;
+}
+
+.notice.error {
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  color: #c62828;
+}
+
+/* 選択セクション */
+.faculty-selection,
+.department-selection,
+.course-selection {
+  margin-bottom: 12px;
+}
+
+.faculty-selection label,
+.department-selection label,
+.course-selection label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.faculty-selection select,
+.department-selection select,
+.course-selection select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+/* 単位取得状況セクション */
+.summary-section {
+  flex: 1;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.summary-section h2 {
+  background-color: #006699;
+  color: white;
+  padding: 8px 12px;
+  font-size: 16px;
+  margin: 0;
+}
+
+#summary-content {
+  padding: 12px;
+  min-height: 150px;
+}
+
+.summary-box {
+  margin-bottom: 15px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.summary-label {
+  flex: 1;
+  font-size: 14px;
+}
+
+.summary-value {
+  font-weight: bold;
+  width: 80px;
+  text-align: right;
+}
+
+.summary-value.progress-good {
+  color: #4CAF50;
+}
+
+.summary-value.progress-warning {
+  color: #FF9800;
+}
+
+.summary-value.progress-bad {
+  color: #F44336;
+}
+
+.summary-progress {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-right: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #4CAF50;
+}
+
+.progress-text {
+  font-size: 12px;
+  width: 35px;
+  text-align: right;
+}
+
+.summary-details {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #ccc;
+}
+
+.summary-details .summary-row {
+  margin-bottom: 5px;
+}
+
+.summary-details .summary-label,
+.summary-details .summary-value {
+  font-size: 13px;
+}
+
+/* 要件充足状況 */
+.requirements-status {
+  margin-top: 20px;
+}
+
+.requirements-status h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.requirement-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.requirement-item.fulfilled {
+  background-color: #e6f7e6;
+  border: 1px solid #c3e6c3;
+}
+
+.requirement-item.not-fulfilled {
+  background-color: #fff0f0;
+  border: 1px solid #ffcccc;
+}
+
+.requirement-label {
+  flex: 1;
+}
+
+.requirement-value {
+  font-weight: bold;
+}
+
+.requirement-item.fulfilled .requirement-value {
+  color: #4CAF50;
+}
+
+.requirement-item.not-fulfilled .requirement-value {
+  color: #F44336;
+}
+
+.last-updated {
+  font-size: 11px;
+  color: #777;
+  text-align: right;
+  margin-top: 10px;
+}
+
+/* エラーメッセージ */
+.error-message {
+  background-color: #fff0f0;
+  border: 1px solid #ffcccc;
+  padding: 12px;
+  border-radius: 5px;
+  margin: 10px 0;
+  color: #d32f2f;
+}
+
+/* ローディング表示 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #555;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 102, 153, 0.3);
+  border-radius: 50%;
+  border-top-color: #006699;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* アクションボタン */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.action-buttons button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.action-buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#check-button {
+  background-color: #006699;
+  color: white;
+  flex: 2;
+  margin-right: 8px;
+}
+
+#check-button:hover:not(:disabled) {
+  background-color: #004e77;
+}
+
+#settings-button {
+  background-color: #f0f0f0;
+  color: #333;
+  flex: 1;
+}
+
+#settings-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 設定ダイアログ */
+.settings-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.settings-dialog > div {
+  background-color: white;
+  width: 90%;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #006699;
+  color: white;
+}
+
+.settings-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.close-settings {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.settings-content {
+  padding: 15px;
+}
+
+.settings-item {
+  margin-bottom: 15px;
+}
+
+.settings-item label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.settings-item select,
+.settings-item input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.settings-item input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.settings-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#save-settings {
+  background-color: #006699;
+  color: white;
+  flex: 1;
+  margin-right: 10px;
+}
+
+#reset-settings {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* フッター */
+footer {
+  font-size: 11px;
+  color: #777;
+  text-align: center;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+/* 推奨科目セクション */
+.recommendations-section {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+.recommendations-section h3 {
+  font-size: 14px;
+  margin: 0 0 12px 0;
+  color: #333;
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.recommendation-category {
+  margin-bottom: 12px;
+  padding: 8px;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+.recommendation-category h4 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.recommendation-category ul {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.recommendation-category li {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.recommendation-category.required {
+  background-color: #fff8e1;
+  border-color: #ffe082;
+}
+
+.recommendation-category.required h4 {
+  color: #ff8f00;
+}
+
+/* 不足単位の詳細 */
+.missing-credits {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background-color: #ffebee;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.missing-credits h4 {
+  margin: 0 0 5px 0;
+  font-size: 13px;
+  color: #c62828;
+}
+
+.missing-credits ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.missing-credits li {
+  margin-bottom: 2px;
+}
+
+/* 結果セクションの高さを調整 */
+.summary-section {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+@media (max-height: 600px) {
+  .summary-section {
+    max-height: 250px;
+  }
+}

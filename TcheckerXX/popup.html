@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>立命館大学 単位チェッカー</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header>
+      <h1>立命館大学 単位チェッカー</h1>
+      <img src="icons/icon48.png" alt="単位チェッカーアイコン" class="logo">
+    </header>
+    
+    <div class="instructions">
+      <p>使い方：</p>
+      <ol>
+        <li>CAMPUS WEBにログイン</li>
+        <li>「履修状況確認（受講登録内容・成績一覧）」ページを開く</li>
+        <li>「科目一覧」タブを開く</li>
+        <li>学部・学科を選択して「単位チェック」ボタンをクリック</li>
+      </ol>
+    </div>
+    
+    <div class="faculty-selection">
+      <label for="popup-faculty-select">学部選択：</label>
+      <select id="popup-faculty-select"></select>
+    </div>
+    
+    <div class="department-selection">
+      <label for="popup-department-select">学科選択：</label>
+      <select id="popup-department-select"></select>
+    </div>
+    
+    <div class="course-selection" id="course-selection-container">
+      <label for="popup-course-select">コース選択：</label>
+      <select id="popup-course-select"></select>
+    </div>
+    
+    <div class="summary-section">
+      <h2>単位取得状況</h2>
+      <div id="summary-content">
+        <p class="notice">CAMPUS WEBで「科目一覧」を開いて単位チェックボタンをクリックすると結果が表示されます。</p>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button id="check-button">単位チェック実行</button>
+      <button id="settings-button">設定</button>
+    </div>
+    
+    <footer>
+      <p>立命館大学 単位チェッカー v1.2</p>
+    </footer>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

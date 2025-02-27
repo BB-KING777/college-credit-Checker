@@ -1,0 +1,121 @@
+{
+  "courseCategories": {
+    "ise_is": {
+      "hasCourses": true,
+      "foreignLanguage": [
+        "英語入門 091", "英語入門 092", 
+        "英語初級 101", "英語初級 102", "英語初級 103", "英語初級 104",
+        "英語中級 105", "英語中級 106", "英語中級 107", "英語中級 108",
+        "英語上級 109", "英語上級 110", 
+        "Academic Literacy 302", "Academic Literacy 304",
+        "Professional Communication 301", "Professional Communication 303",
+        "Writing for Publication 402", "Presentation Plus 401"
+      ],
+      "generalEducation": [
+        "科学と技術の歴史", "科学・技術と社会", "現代社会と法", "災害と安全",
+        "地域参加学習入門", "経済と社会", "メディアと現代文化", "ジェンダーとダイバーシティ",
+        "現代の国際関係と日本", "日本国憲法", "スポーツと現代社会", "心理学入門",
+        "宇宙科学", "メンタルヘルス", "科学技術と倫理", "哲学と人間", "論理と思考", 
+        "現代人とヘルスケア", "材料と化学", "企業と社会", "世界と日本の食文化",
+        "音楽原論", "現代の世界経済", "社会と福祉", "東アジアと朝鮮半島",
+        "宗教と社会", "世界の言語と文化", "ピア・サポート論", "仕事とキャリア",
+        "現代社会とボランティア", "学びとキャリア", "スポーツのサイエンス",
+        "データサイエンス・AI基礎", "データエンジニアリング基礎", 
+        "Foundations of Data Science and AI", "Foundations of Data Engineering",
+        "Introduction to Global Justice", "Understanding Visual Culture",
+        "Cross-cultural Encounters", "教養ゼミナール"
+      ],
+      "specializedBasic": [
+        "情報基礎数学", "情報理論", "数学１", "数学２", "数学３", "数学４",
+        "数学演習１", "数学演習２", "確率・統計", "多変量解析", "フーリエ解析",
+        "物理１", "物理２", "化学", "化学１", "化学２", "生物科学", "生物科学１", "生物科学２",
+        "Engineering Mathematics 1", "Computing Mathematics", "Engineering Mathematics 2",
+        "Mathematical Foundations of Computer Science", "Engineering Mathematics 3",
+        "Engineering Mathematics 4", "Numerical Algorithms", "Introduction to Differential Equations",
+        "Introduction to Probability and Statistics", "Statistical Analysis Simulation and Modeling 1",
+        "Statistical Analysis, Simulation, and Modeling", "Statistical Analysis Simulation and Modeling 2",
+        "Physics", "Physics for Computer Science", "Exercises in Physics",
+        "Physics for Computer Science - Exercises", "Experimentation 1", "Experimentation 2",
+        "Applied Informatics 1", "Applied Informatics 2", "Optimization and Control Theory",
+        "離散数学", "数値解析"
+      ],
+      "specializedCommon": [
+        "情報倫理と情報技術", "情報理工基礎演習", "計算機科学入門", "論理回路",
+        "コンピュータネットワーク", "ソフトウェア工学", "オペレーティングシステム",
+        "データベース", "計算機構成論", "ネットワークセキュリティ", "デジタル信号処理",
+        "Information Science in Action", "Introduction to Information Systems Engineering",
+        "Professional Ethics", "Introduction to Experimentation", "Experimental Design"
+      ],
+      "careerGlobal": [
+        "日本語表現技術", "技術経営概論", "技術経営特論", "イノベーション論", 
+        "ファイナンス入門", "情報技術実践１", "情報技術実践２", "情報技術実践３", 
+        "ICT価値探求デザイン演習", "ＩＴを活用した業務改革入門", "プロジェクトマネジメント基礎",
+        "情報と職業", "連携講座", "コーオプ演習"
+      ],
+      "specializedCore": {
+        "common": [
+          "情報倫理と情報技術", "情報理工基礎演習", "計算機科学入門", "情報と職業",
+          "プログラミング演習１", "プログラミング演習２", "卒業研究１", "卒業研究２", "卒業研究３"
+        ],
+        "sa": [
+          "システムアーキテクト演習", "システムアーキテクト実験１", "システムアーキテクト実験２", 
+          "システムアーキテクト実験３", "システムアーキテクトプログラミング演習",
+          "データ構造とアルゴリズム", "計算論", "ソフトウェア仕様化技法", "ソフトウェア開発管理",
+          "ユーザビリティ工学", "データモデリング", "ビッグデータ解析", "メディア処理実験",
+          "計算機アーキテクチャ", "分散システム", "IoT", "オブジェクト指向論", "プログラミング言語"
+        ],
+        "sn": [
+          "セキュリティ・ネットワーク概論", "セキュリティ・ネットワーク学実験１", 
+          "セキュリティ・ネットワーク学実験２", "セキュリティ・ネットワーク学実験３",
+          "プログラミング言語", "データ構造とアルゴリズム", "ネットワークセキュリティ",
+          "システムセキュリティ", "暗号理論", "言語処理系", "情報通信ネットワーク",
+          "ワイヤレス通信システム", "システムソフトウェア構成論", "Web情報技術概論",
+          "計算機アーキテクチャ", "分散システム", "ネットワーク開発実験", "セキュアシステム開発実験",
+          "ユーザビリティ工学", "自然言語処理"
+        ],
+        "sd": [
+          "先端社会デザイン創成１", "先端社会デザイン創成２", "実践プログラミング演習",
+          "社会デザイン論", "テキストマイニング", "知識工学", "データマイニング基礎",
+          "情報アクセス論", "自然言語処理", "ヒューマンインタフェース", "Webアプリケーション",
+          "Web情報技術概論", "Webコンピューティング", "オブジェクト指向論",
+          "データ構造とアルゴリズム", "社会システムデザイン概論", "先端社会デザイン概論",
+          "プログラミング言語", "プログラミング演習２", "認知工学"
+        ],
+        "ri": [
+          "実世界情報実験１", "実世界情報実験２", "実世界情報実験３",
+          "実世界情報演習１", "実世界情報演習２", "実世界情報演習３",
+          "プログラミング言語", "プログラミング演習２", "データ構造とアルゴリズム",
+          "機械工学概論", "ユビキタスコンピューティング", "センシング工学", "実世界情報処理",
+          "インタラクションデザイン論", "生体計測工学", "システム制御工学", "電気電子回路",
+          "ロボティクス", "パターン認識"
+        ],
+        "mm": [
+          "メディア実験１", "メディア実験２", "メディアプロジェクト演習１", "メディアプロジェクト演習２",
+          "プログラミング言語", "プログラミング演習２", "データ構造とアルゴリズム",
+          "メディア基礎数学", "メディア計算機演習", "音声音響情報処理１", "音声音響情報処理２",
+          "画像情報処理１", "画像情報処理２", "コンピュータグラフィックス", "コンピュータグラフィックス応用",
+          "ヒューマンインタフェース", "パターン認識", "電気電子回路", "オブジェクト指向論"
+        ],
+        "ci": [
+          "知能情報学実験", "知能情報システム創成", "知能情報処理演習", "知能情報基礎演習", 
+          "生体生理工学", "色彩工学", "心理物理学", "人工知能", "自然言語処理",
+          "ビッグデータ解析", "ヒューマンインタフェース", "パターン認識", "機械学習", 
+          "シミュレーション工学", "脳機能情報処理", "感性工学", "最適化数学",
+          "プログラミング言語", "データ構造とアルゴリズム", "電気電子回路"
+        ],
+        "isse": [
+          "PBL 1: Problem Analysis and Modeling", "PBL 2: Team-based Design", 
+          "PBL 3: Creative Design", "PBL 4: Team-based Creative Design", 
+          "PBL 5: Design Evolution",
+          "Introduction to Programming", "Introduction to OOA OOD and UML",
+          "Imperative Programming", "Imperative Programming Practice", 
+          "Network Systems", "Human Interface", "Image Processing", "Data Visualization",
+          "Visualization and Computer Art", "Web Information Engineering", "Distributed Systems",
+          "Systems Ergonomics", "Ergonomics and Affective Engineering", "Data Science",
+          "Pattern Recognition and Machine Learning", "Introduction to Robotic Systems",
+          "Embedded Systems"
+        ]
+      }
+    }
+  }
+}

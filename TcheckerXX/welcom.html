@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+ <head>
+  <title>他の場所からでも分かるタイトル</title>
+ </head>
+ <body>
+
+  <p><img src="welcome.gif" alt="いらっしゃいませ" /></p>
+
+  <h1>文書の主見出し</h1>
+
+  <p>意味のまとまりのある段落を書こう</p>
+
+  <ul>
+   <li>内容をリストとして</li>
+   <li>列挙してもよい</li>
+   <li><a href="http://www.kanzaki.com/">役立つ情報</a>にリンクもできる</li>
+  </ul>
+
+  <hr />
+  <footer>
+   <address>
+    何某作;  
+    <a href="mailto:yourmail@domain.com">作者へのメッセージ</a>
+   </address>
+   20YY-MM-DD更新
+  </footer>
+ </body>
+</html>

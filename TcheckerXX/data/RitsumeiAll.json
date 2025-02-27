@@ -1,0 +1,26 @@
+{
+  "faculties": [
+    {
+      "id": "ise",
+      "name": "情報理工学部",
+      "departments": [
+        {
+          "id": "is",
+          "name": "情報理工学科",
+          "hasCourses": true,
+          "requirementsFile": "Jorisotsu.json",
+          "courseCategoriesFile": "Jorijugyo.json",
+          "courses": [
+            { "id": "sa", "name": "システムアーキテクトコース" },
+            { "id": "sn", "name": "セキュリティ・ネットワークコース" },
+            { "id": "sd", "name": "先端社会デザインコース" },
+            { "id": "ri", "name": "実世界情報コース" },
+            { "id": "mm", "name": "画像・音メディアコース" },
+            { "id": "ci", "name": "知能情報コース" },
+            { "id": "isse", "name": "情報システムグローバルコース" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,10 @@
 # college-credit-Checker
 For only Ritsumeikan Student
 
+> [!NOTE]
+> このプラグインが気に入ったらStarお願いします。パトロンはいつでも募集しています。
+> 開発者が現在4回生になるという事もあり、バグや不具合、学部別対応に時間を有する場合がございます。ご了承ください。
+
 
 本ソフトウェアはCC BY-NC-SA 4.0です。
 

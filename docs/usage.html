@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使い方 - 立命館大学単位チェッカー</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo-container">
+        <img src="logo.png" alt="立命館大学単位チェッカー" class="logo">
+        <div class="site-title">立命館大学単位チェッカー</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="features.html">特徴</a></li>
+          <li><a href="usage.html" class="active">使い方</a></li>
+          <li><a href="download.html">ダウンロード</a></li>
+          <li><a href="faq.html">よくある質問</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">≡</button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="features.html">特徴</a></li>
+        <li><a href="usage.html" class="active">使い方</a></li>
+        <li><a href="download.html">ダウンロード</a></li>
+        <li><a href="faq.html">よくある質問</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </header>
+  
+  <section class="page-header">
+    <div class="container">
+      <h1>使い方ガイド</h1>
+      <p>立命館大学単位チェッカーは非常にシンプルで使いやすいツールです。</p>
+    </div>
+  </section>
+  
+  <section class="section usage">
+    <div class="container">
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3 class="step-title">拡張機能をインストール</h3>
+            <p class="step-text">GitHubから単位チェッカーをダウンロードし、Chromeブラウザにインストールします。ブラウザの右上に拡張機能のアイコンが表示されます。詳しいインストール方法は下記をご参照ください。</p>
+          </div>
+          <div class="step-line"></div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3 class="step-title">CAMPUS WEBにログイン</h3>
+            <p class="step-text">立命館大学のCAMPUS WEBにログインして、「履修状況確認（受講登録内容・成績一覧）」から「科目一覧」タブを開きます。単位チェッカーはこの画面から情報を取得します。</p>
+          </div>
+          <div class="step-line"></div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3 class="step-title">単位チェック実行</h3>
+            <p class="step-text">画面右下に表示される「単位チェック」ボタンをクリックするか、拡張機能のアイコンをクリックして分析を実行します。データの読み込みが完了するまで数秒お待ちください。</p>
+          </div>
+          <div class="step-line"></div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3 class="step-title">結果を確認</h3>
+            <p class="step-text">区分別の単位取得状況や必修科目の履修状況、卒業要件の充足状況などを確認できます。足りない単位や科目を把握して履修計画に役立てましょう。グラフや色分けされた表示で、一目で現状を把握できます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section installation-guide">
+    <div class="container">
+      <div class="section-title">
+        <h2>詳細インストール手順</h2>
+        <p>GitHubからダウンロードして手動でインストールする方法を解説します</p>
+      </div>
+      
+      <div class="installation-steps">
+        <div class="installation-step">
+          <div class="installation-step-number">1</div>
+          <div class="installation-step-content">
+            <h3>GitHubからZIPファイルをダウンロード</h3>
+            <p><a href="https://github.com/BB-KING777/college-credit-Checker" target="_blank">GitHub リポジトリ</a>にアクセスし、右のReleaseをクリックして内部に入ってから。</a>TcheckerXXなどのzipファイルをクリックしてダウンロードします。</p>
+            <div class="installation-image">
+              <img src="002-b.png" alt="GitHubからダウンロード">
+            </div>
+          </div>
+        </div>
+        
+        <div class="installation-step">
+          <div class="installation-step-number">2</div>
+          <div class="installation-step-content">
+            <h3>ZIPファイルを解凍</h3>
+            <p>ダウンロードしたZIPファイルを任意の場所に解凍します。フォルダ内に拡張機能のファイル一式が展開されます。</p>
+           <!-- <div class="installation-image">
+              <img src="/api/placeholder/600/300" alt="ZIPファイルの解凍">
+            </div>-->
+          </div>
+        </div>
+        
+        <div class="installation-step">
+          <div class="installation-step-number">3</div>
+          <div class="installation-step-content">
+            <h3>Chromeの拡張機能ページを開く</h3>
+            <p>Chrome ブラウザで、アドレスバーに「chrome://extensions/」と入力してEnterを押します。または、Chromeのメニュー（右上の3点マークをクリック）から「その他のツール」→「拡張機能」を選択します。</p>
+            <div class="installation-image">
+              <img src="003.png" alt="Chrome拡張機能ページを開く">
+            </div>
+          </div>
+        </div>
+        
+        <div class="installation-step">
+          <div class="installation-step-number">4</div>
+          <div class="installation-step-content">
+            <h3>デベロッパーモードを有効にする</h3>
+            <p>拡張機能ページの右上にある「デベロッパーモード」のトグルをオンにします。</p>
+            <div class="installation-image">
+              <img src="004.png" alt="デベロッパーモードを有効化">
+            </div>
+          </div>
+        </div>
+        
+        <div class="installation-step">
+          <div class="installation-step-number">5</div>
+          <div class="installation-step-content">
+            <h3>拡張機能をインストール</h3>
+            <p>「パッケージ化されていない拡張機能を読み込む」ボタンをクリックし、先ほど解凍したフォルダを選択します。</p>
+            <div class="installation-image">
+              <img src="005.png" alt="拡張機能をインストール">
+            </div>
+          </div>
+        </div>
+        
+        <div class="installation-step">
+          <div class="installation-step-number">6</div>
+          <div class="installation-step-content">
+            <h3>インストール完了</h3>
+            <p>インストールが完了すると、Chromeの拡張機能バーに単位チェッカーのアイコンが表示されます。拡張機能バーに表示されない場合は、パズルのアイコンをクリックして表示されるメニューからピン留めしてください。</p>
+            <!--<div class="installation-image">
+              <img src="/api/placeholder/600/300" alt="インストール完了">
+            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section usage-tips">
+    <div class="container">
+      <div class="section-title">
+        <h2>利用時のヒント</h2>
+        <p>より効果的に単位チェッカーを使うためのヒントです</p>
+      </div>
+      
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon">💡</div>
+          <h3>定期的に確認</h3>
+          <p>履修登録期間や成績発表後など、定期的に単位チェックを行うことで、履修計画を最適化できます。</p>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">🔄</div>
+          <h3>ページの更新</h3>
+          <p>データが正しく表示されない場合は、CAMPUSのページを更新してから再度実行してみてください。</p>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">📋</div>
+          <h3>結果を保存</h3>
+          <p>分析結果はスクリーンショットや印刷機能を使って保存しておくと、オフラインでも確認できます。</p>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">🔍</div>
+          <h3>詳細を確認</h3>
+          <p>単位数だけでなく、科目の内容や開講時期も考慮して履修計画を立てましょう。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <div class="container">
+      <h2>準備はできましたか？</h2>
+      <p>今すぐ立命館大学単位チェッカーをダウンロードして、効率的な履修計画を立てましょう。</p>
+      <div class="cta-buttons">
+        <a href="download.html" class="btn">ダウンロードする</a>
+        <a href="contact.html" class="btn btn-outline">質問がある場合</a>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>単位チェッカー</h3>
+          <p>立命館大学の学生のための無料Chrome拡張機能。<br>卒業要件充足状況を簡単にチェック。</p>
+          <div class="social-links">
+            <a href="https://twitter.com/denkiryokingg" class="social-link">𝕏</a>
+            <a href="#" class="social-link" id="footer-instagram-link">📷</a>
+            <a href="https://github.com/BB-KING777/college-credit-Checker" class="social-link">🐙</a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>リンク</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="features.html">特徴</a></li>
+            <li><a href="usage.html">使い方</a></li>
+            <li><a href="download.html">ダウンロード</a></li>
+            <li><a href="faq.html">よくある質問</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>協力のお願い</h3>
+          <ul class="footer-links">
+            <li><a href="#">卒業要件データの提供</a></li>
+            <li><a href="#">授業データの提供</a></li>
+            <li><a href="#">テスト協力</a></li>
+            <li><a href="#">バグ報告</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>関連情報</h3>
+          <ul class="footer-links">
+            <li><a href="#">プライバシーポリシー</a></li>
+            <li><a href="#">ライセンス情報</a></li>
+            <li><a href="#">GitHub リポジトリ</a></li>
+            <li><a href="#">開発状況</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2025 立命館大学単位チェッカー. 本サービスは立命館大学公式のものではありません。
+      </div>
+    </div>
+  </footer>
+  
+  <script src="scripts.js"></script>
+</body>
+</html>

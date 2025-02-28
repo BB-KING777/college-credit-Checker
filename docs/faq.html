@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>よくある質問 - 立命館大学単位チェッカー</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo-container">
+        <img src="logo.png" alt="立命館大学単位チェッカー" class="logo">
+        <div class="site-title">立命館大学単位チェッカー</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="features.html">特徴</a></li>
+          <li><a href="usage.html">使い方</a></li>
+          <li><a href="download.html">ダウンロード</a></li>
+          <li><a href="faq.html" class="active">よくある質問</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">≡</button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="features.html">特徴</a></li>
+        <li><a href="usage.html">使い方</a></li>
+        <li><a href="download.html">ダウンロード</a></li>
+        <li><a href="faq.html" class="active">よくある質問</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </header>
+  
+  <section class="page-header">
+    <div class="container">
+      <h1>よくある質問</h1>
+      <p>立命館大学単位チェッカーについてよく寄せられる質問と回答です。</p>
+    </div>
+  </section>
+  
+  <section class="section faq">
+    <div class="container">
+      <div class="faq-categories">
+        <div class="faq-category active" data-category="general">一般的な質問</div>
+        <div class="faq-category" data-category="usage">使い方</div>
+        <div class="faq-category" data-category="technical">技術的な質問</div>
+        <div class="faq-category" data-category="support">サポート</div>
+      </div>
+      
+      <div class="accordion" id="general">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            単位チェッカーは無料で使えますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              はい、完全に無料でご利用いただけます。インストール料金や月額料金などは一切かかりません。本プロジェクトは立命館大学の学生が学生のために開発している非営利のツールです。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            どの学部・学科に対応していますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              現在は情報理工学部のみに対応しています。今後、他の学部へも対応を広げていく予定です。そのためにも、各学部の卒業要件データや授業データの提供にご協力いただけると幸いです。学部別の対応状況や今後の計画については<a href="download.html#roadmap">開発ロードマップ</a>をご覧ください。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            個人情報やパスワードは安全ですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              当拡張機能はユーザーのログイン情報や個人情報を収集・保存することはありません。表示されている科目データのみを解析し、すべての処理はユーザーのブラウザ内で完結します。外部サーバーへのデータ送信は一切行いません。ソースコードはGitHubで公開されており、透明性を確保しています。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            分析結果は正確ですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              高い精度で分析を行っていますが、カリキュラム改正や特殊なケースによって完全に正確でない場合があります。最終的な卒業判定は大学の公式情報を確認してください。ご不明な点やデータの不一致を発見された場合は、<a href="contact.html">お問い合わせフォーム</a>からご報告いただけると幸いです。正確性向上のため日々改善を行っています。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            Chromeウェブストアでインストールできますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              現在はChromeウェブストアでの公開はしていません。GitHubリポジトリからダウンロードして手動でインストールする必要があります。インストール方法は<a href="usage.html">使い方ページ</a>に記載されています。将来的にはChromeウェブストアでの公開も予定しています。
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion" id="usage" style="display: none;">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            どうやって使い始めればいいですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              まず<a href="download.html">ダウンロードページ</a>からプログラムをダウンロードし、Chromeブラウザにインストールしてください。その後、CAMPUS WEBにログインして「履修状況確認（受講登録内容・成績一覧）」画面を開き、「単位チェック」ボタンをクリックするだけです。詳しい手順は<a href="usage.html">使い方ページ</a>をご覧ください。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            正しく動作しない場合はどうすればいいですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              以下の点をご確認ください：
+              <ul>
+                <li>Chrome拡張機能が有効になっているか</li>
+                <li>最新バージョンを使用しているか</li>
+                <li>正しいCAMPUS WEBのページ（科目一覧タブ）を開いているか</li>
+                <li>ブラウザをリロードしてから再度実行してみる</li>
+              </ul>
+              それでも問題が解決しない場合は、<a href="contact.html">お問い合わせページ</a>から詳細をご報告ください。また、<a href="https://github.com/BB-KING777/college-credit-Checker/issues">GitHub Issues</a>でバグ報告を行うこともできます。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            単位チェッカーの結果を保存できますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              現在のバージョンでは、ブラウザの印刷機能やスクリーンショット機能を使って結果を保存することができます。将来のアップデートでは、PDF出力やデータのエクスポート機能の追加を予定しています。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            他のブラウザでも使えますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              現在はGoogle Chromeのみ対応しています。将来的にはFirefoxやEdgeなど他のブラウザへの対応も検討していますが、具体的な予定は未定です。最新の情報は<a href="download.html#roadmap">開発ロードマップ</a>をご確認ください。
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion" id="technical" style="display: none;">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            拡張機能はどのようにデータを取得していますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              拡張機能はCAMPUS WEBの科目一覧ページに表示されている情報をブラウザ内で解析しています。ページのHTMLからテーブルデータを抽出し、科目名や単位数、評価などの情報を取得して分析しています。外部サーバーへのデータ送信は行わず、すべての処理はユーザーのブラウザ内で完結します。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            どのような技術で開発されていますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              HTML, CSS, JavaScriptを使用したChrome拡張機能として開発されています。具体的には：
+              <ul>
+                <li>フロントエンド: HTML5, CSS3, JavaScript (ES6+)</li>
+                <li>データ処理: JavaScript</li>
+                <li>UIフレームワーク: 独自の軽量フレームワーク</li>
+                <li>ビルドツール: Webpack</li>
+              </ul>
+              すべてのソースコードは<a href="https://github.com/BB-KING777/college-credit-Checker">GitHub</a>で公開されており、オープンソースプロジェクトとして開発されています。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            オフライン環境でも使えますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              拡張機能自体はオフラインでもインストールできますが、CAMPUS WEBへのアクセスにはインターネット接続が必要です。一度読み込んだデータであれば、一時的にオフラインでも表示は可能ですが、最新のデータを取得するには再度オンライン環境でCAMPUS WEBにアクセスする必要があります。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            データの更新頻度はどのくらいですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              卒業要件データは学部のカリキュラム改正に合わせて更新しています。バグ修正や機能追加などのアップデートは不定期に行っており、GitHubリポジトリで公開しています。拡張機能を最新の状態に保つには、定期的に<a href="download.html">ダウンロードページ</a>から最新版を確認してください。
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="accordion" id="support" style="display: none;">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            バグを見つけた場合はどこで報告できますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              バグ報告や改善提案は<a href="https://github.com/BB-KING777/college-credit-Checker/issues">GitHub Issues</a>、または<a href="contact.html">お問い合わせページ</a>から行うことができます。報告の際には以下の情報を含めていただけると助かります：
+              <ul>
+                <li>使用しているブラウザとバージョン</li>
+                <li>拡張機能のバージョン</li>
+                <li>発生した問題の詳細な説明</li>
+                <li>可能であれば、問題の再現手順やスクリーンショット</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            機能リクエストはどこで行えますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              新機能のリクエストや改善提案は、<a href="https://github.com/BB-KING777/college-credit-Checker/issues">GitHub Issues</a>に「機能リクエスト」ラベルを付けて投稿するか、<a href="contact.html">お問い合わせページ</a>からご連絡ください。開発チームで検討させていただきます。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            プロジェクトに協力するにはどうすればいいですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              以下の方法でプロジェクトに協力いただけます：
+              <ul>
+                <li>各学部の卒業要件データや授業データの提供</li>
+                <li>コードの改善や機能追加（Pull Request）</li>
+                <li>バグ報告やテスト協力</li>
+                <li>ドキュメントの改善や翻訳</li>
+                <li>SNSでの拡散や口コミでの紹介</li>
+              </ul>
+              詳細は<a href="contact.html">お問い合わせページ</a>または<a href="https://github.com/BB-KING777/college-credit-Checker">GitHubリポジトリ</a>をご確認ください。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            開発者に直接連絡する方法はありますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              開発者には以下の方法で連絡できます：
+              <ul>
+                <li>Twitter: <a href="https://twitter.com/denkiryokingg">@denkiryokinggg</a></li>
+                <li>GitHub: <a href="https://github.com/BB-KING777">BB-KING777</a></li>
+                <li><a href="contact.html">お問い合わせフォーム</a>からのメッセージ</li>
+              </ul>
+              ご質問や提案など、お気軽にご連絡ください。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section faq-search">
+    <div class="container">
+      <div class="section-title">
+        <h2>質問を検索</h2>
+        <p>キーワードで質問を検索できます</p>
+      </div>
+      
+      <div class="search-box">
+        <input type="text" id="faqSearch" placeholder="キーワードを入力してください...">
+        <button id="searchBtn" class="search-btn">検索</button>
+      </div>
+      
+      <div id="searchResults" class="search-results">
+        <!-- 検索結果がここに表示されます -->
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <div class="container">
+      <h2>質問が見つかりませんでしたか？</h2>
+      <p>お探しの質問が見つからない場合は、お問い合わせページからご質問ください。</p>
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn">お問い合わせ</a>
+        <a href="https://github.com/BB-KING777/college-credit-Checker/issues" class="btn btn-outline">GitHubで質問</a>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>単位チェッカー</h3>
+          <p>立命館大学の学生のための無料Chrome拡張機能。<br>卒業要件充足状況を簡単にチェック。</p>
+          <div class="social-links">
+            <a href="https://twitter.com/denkiryokingg" class="social-link">𝕏</a>
+            <a href="#" class="social-link" id="footer-instagram-link">📷</a>
+            <a href="https://github.com/BB-KING777/college-credit-Checker" class="social-link">🐙</a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>リンク</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="features.html">特徴</a></li>
+            <li><a href="usage.html">使い方</a></li>
+            <li><a href="download.html">ダウンロード</a></li>
+            <li><a href="faq.html">よくある質問</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>協力のお願い</h3>
+          <ul class="footer-links">
+            <li><a href="#">卒業要件データの提供</a></li>
+            <li><a href="#">授業データの提供</a></li>
+            <li><a href="#">テスト協力</a></li>
+            <li><a href="#">バグ報告</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>関連情報</h3>
+          <ul class="footer-links">
+            <li><a href="#">プライバシーポリシー</a></li>
+            <li><a href="#">ライセンス情報</a></li>
+            <li><a href="#">GitHub リポジトリ</a></li>
+            <li><a href="#">開発状況</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2025 立命館大学単位チェッカー. 本サービスは立命館大学公式のものではありません。
+      </div>
+    </div>
+  </footer>
+  
+  <script src="scripts.js"></script>
+</body>
+</html>

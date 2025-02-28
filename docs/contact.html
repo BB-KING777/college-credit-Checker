@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ - 立命館大学単位チェッカー</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo-container">
+        <img src="logo.png" alt="立命館大学単位チェッカー" class="logo">
+        <div class="site-title">立命館大学単位チェッカー</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="features.html">特徴</a></li>
+          <li><a href="usage.html">使い方</a></li>
+          <li><a href="download.html">ダウンロード</a></li>
+          <li><a href="faq.html">よくある質問</a></li>
+          <li><a href="contact.html" class="active">お問い合わせ</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">≡</button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="features.html">特徴</a></li>
+        <li><a href="usage.html">使い方</a></li>
+        <li><a href="download.html">ダウンロード</a></li>
+        <li><a href="faq.html">よくある質問</a></li>
+        <li><a href="contact.html" class="active">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </header>
+  
+  <section class="page-header">
+    <div class="container">
+      <h1>お問い合わせ</h1>
+      <p>ご質問やフィードバック、機能リクエストなどお気軽にお寄せください。</p>
+    </div>
+  </section>
+  
+  <section class="section contact-options-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>連絡方法を選択</h2>
+        <p>以下の方法からお好きな連絡手段をお選びください</p>
+      </div>
+      
+      <div class="contact-options">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i>🐙</i>
+          </div>
+          <h3 class="contact-type">GitHub Issues</h3>
+          <p class="contact-info">バグ報告や機能リクエスト、学部データの提供などはGitHubのIssuesからどうぞ。開発者と直接やりとりができます。</p>
+          <a href="https://github.com/BB-KING777/college-credit-Checker/issues" class="btn" target="_blank">Issues を開く</a>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i>𝕏</i>
+          </div>
+          <h3 class="contact-type">Twitter DM</h3>
+          <p class="contact-info">質問や提案などはTwitterのDMからも受け付けています。気軽に連絡できる方法です。</p>
+          <a href="https://twitter.com/denkiryokinggg" class="btn" target="_blank">@denkiryokinggg</a>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i>📷</i>
+          </div>
+          <h3 class="contact-type">Instagram DM</h3>
+          <p class="contact-info">InstagramのDMからもお問い合わせいただけます。</p>
+          <a href="https://www.instagram.com/photo_otaku_0628/" class="btn" id="instagram-link">DMを送る</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!--<section class="section contact-form-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>お問い合わせフォーム</h2>
+        <p>以下のフォームからメッセージを送信できます</p>
+      </div>
+      
+      <div class="contact-form-container">
+        <form id="contactForm" class="contact-form">
+          <div class="form-group">
+            <label for="name">お名前 <span class="required">*</span></label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">メールアドレス <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">件名 <span class="required">*</span></label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="category">カテゴリ</label>
+            <select id="category" name="category">
+              <option value="question">質問</option>
+              <option value="feedback">フィードバック</option>
+              <option value="bug">バグ報告</option>
+              <option value="feature">機能リクエスト</option>
+              <option value="data">データ提供</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">メッセージ <span class="required">*</span></label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="dataConsent" name="dataConsent" required>
+              <span class="checkmark"></span>
+              個人情報の取り扱いに同意します
+            </label>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn submit-btn">送信する</button>
+            <button type="reset" class="btn btn-outline reset-btn">リセット</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>-->
+  
+  <section class="section data-contribution-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>データ提供のお願い</h2>
+        <p>立命館大学単位チェッカーをより多くの学部に対応させるためのデータ提供にご協力ください</p>
+      </div>
+      
+      <div class="data-contribution-info">
+        <div class="contribution-text">
+          <p>現在、立命館大学単位チェッカーは情報理工学部のみに対応していますが、他の学部・学科にも対応を広げていきたいと考えています。そのためには、各学部の卒業要件データが必要です。</p>
+          
+          <h3>必要なデータ</h3>
+          <ul class="contribution-list">
+            <li>
+              <strong>卒業要件データ</strong>
+              <p>各学部・学科の卒業に必要な単位数や必修科目のリスト、区分ごとの単位要件</p>
+            </li>
+            <li>
+              <strong>科目コードデータ</strong>
+              <p>各学部で開講されている科目のコードと名称の対応表</p>
+            </li>
+            <li>
+              <strong>カリキュラムデータ</strong>
+              <p>入学年度ごとの卒業要件の違いに関する情報</p>
+            </li>
+          </ul>
+          
+          <h3>データ提供の方法</h3>
+          <p>以下のいずれかの方法でデータをご提供ください：</p>
+          <ul class="contribution-method-list">
+            <li>上記のお問い合わせフォームから「データ提供」カテゴリを選択して送信</li>
+            <li><a href="https://github.com/BB-KING777/college-credit-Checker/issues">GitHub Issues</a>に「データ提供」ラベルを付けて投稿</li>
+            <li>開発者の<a href="https://twitter.com/denkiryokingg">Twitter</a>にDMで送信</li>
+          </ul>
+          
+          <p class="contribution-note">※提供いただいたデータは立命館大学単位チェッカーの開発目的以外には使用しません。個人情報やプライバシーに関わる情報は含めないようお願いします。</p>
+        </div>
+        
+        <!--<div class="contribution-image">
+          <img src="/api/placeholder/400/500" alt="データ提供のイメージ">
+        </div>-->
+      </div>
+    </div>
+  </section>
+  
+  <section class="section faq-summary">
+    <div class="container">
+      <div class="section-title">
+        <h2>よくある質問</h2>
+        <p>お問い合わせの前にご確認ください</p>
+      </div>
+      
+      <div class="faq-summary-list">
+        <div class="faq-summary-item">
+          <h3>お問い合わせへの回答はどのくらいで来ますか？</h3>
+          <p>頑張って早めに返信します。GitHubのIssuesを使用した場合は、他の開発者やユーザーからも回答が得られる可能性があります。</p>
+        </div>
+        
+        <div class="faq-summary-item">
+          <h3>匿名で問い合わせることはできますか？</h3>
+          <p>GitHubのIssuesでは、GitHubアカウントが必要ですが、実名を使う必要はありません。一番手軽なのはTwitterか、instagramかもしれません。</p>
+        </div>
+        
+        <div class="faq-summary-item">
+          <h3>開発に参加するにはどうすればいいですか？</h3>
+          <p>GitHubリポジトリをフォークして、Pull Requestを送信することで開発に参加できます。また、テスターや翻訳者、ドキュメント作成者としての参加も歓迎しています。詳細はGitHubのREADMEをご確認ください。</p>
+        </div>
+        
+        <a href="faq.html" class="btn btn-outline view-all-faq">すべての質問を見る</a>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>単位チェッカー</h3>
+          <p>立命館大学の学生のための無料Chrome拡張機能。<br>卒業要件充足状況を簡単にチェック。</p>
+          <div class="social-links">
+            <a href="https://twitter.com/denkiryokingg" class="social-link">𝕏</a>
+            <a href="#" class="social-link" id="footer-instagram-link">📷</a>
+            <a href="https://github.com/BB-KING777/college-credit-Checker" class="social-link">🐙</a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>リンク</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="features.html">特徴</a></li>
+            <li><a href="usage.html">使い方</a></li>
+            <li><a href="download.html">ダウンロード</a></li>
+            <li><a href="faq.html">よくある質問</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>協力のお願い</h3>
+          <ul class="footer-links">
+            <li><a href="#">卒業要件データの提供</a></li>
+            <li><a href="#">授業データの提供</a></li>
+            <li><a href="#">テスト協力</a></li>
+            <li><a href="#">バグ報告</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>関連情報</h3>
+          <ul class="footer-links">
+            <li><a href="#">プライバシーポリシー</a></li>
+            <li><a href="#">ライセンス情報</a></li>
+            <li><a href="#">GitHub リポジトリ</a></li>
+            <li><a href="#">開発状況</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2025 立命館大学単位チェッカー. 本サービスは立命館大学公式のものではありません。
+      </div>
+    </div>
+  </footer>
+  
+  <script src="scripts.js"></script>
+</body>
+</html>

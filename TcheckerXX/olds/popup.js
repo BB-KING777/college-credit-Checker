@@ -1,6 +1,5 @@
-// popup.js - 単位チェッカー拡張機能のポップアップスクリプト
+// popup.js - ポップアップの動作を制御するスクリプト
 
-console.log('popup.js_1');
 // ポップアップの初期化
 document.addEventListener('DOMContentLoaded', () => {
   // 選択セレクタの初期化
@@ -70,7 +69,7 @@ function initializeSelectors() {
         if (!department) return;
         
         // コースがない場合は選択部分を非表示
-        if (!department.hasCourses || !department.courses || department.courses.length === 0) {
+        if (!department.hasCourses || department.courses.length === 0) {
           courseContainer.style.display = 'none';
           chrome.storage.local.set({ selectedCourse: null });
           return;
@@ -188,7 +187,7 @@ function runCreditCheck() {
       const activeTab = tabs[0];
       
       // CAMPUS WEBのページかどうか確認
-      if (!activeTab.url || !activeTab.url.includes('cw.ritsumei.ac.jp')) {
+      if (!activeTab.url.includes('cw.ritsumei.ac.jp')) {
         showErrorMessage('CAMPUS WEBのページで実行してください。');
         return;
       }
@@ -247,7 +246,6 @@ function displayCreditSummary(data) {
   const credits = data.credits;
   const graduationCheck = data.graduationCheck;
   const requirements = data.requirements;
-  const recommendedCourses = data.recommendedCourses || {};
   
   let progressClass = 'progress-warning';
   if (graduationCheck.progress.total >= 90) {
@@ -294,10 +292,11 @@ function displayCreditSummary(data) {
   }
   
   // 専門科目
+// 専門科目
   const specializedTotal = (credits.specializedBasic || 0) + 
                           (credits.specializedCommon || 0) + 
                           (credits.specializedCore || 0) + 
-                          (credits.careerGlobal || 0);
+                          (credits.globalCareer || 0);
   
   html += `
       <div class="summary-row">
@@ -331,63 +330,6 @@ function displayCreditSummary(data) {
           </ul>
         </div>
       `;
-    }
-    
-    html += `</div>`;
-  }
-  
-  // 推奨科目セクション (新機能)
-  if (recommendedCourses) {
-    let hasRecommendations = false;
-    
-    html += `<div class="recommendations-section">
-      <h3>推奨履修科目</h3>`;
-    
-    // 必修科目
-    if (recommendedCourses.required && recommendedCourses.required.length > 0) {
-      hasRecommendations = true;
-      html += `
-        <div class="recommendation-category required">
-          <h4>必修科目（未取得）</h4>
-          <ul>
-            ${recommendedCourses.required.slice(0, 5).map(course => `<li>${course}</li>`).join('')}
-            ${recommendedCourses.required.length > 5 ? `<li>...他 ${recommendedCourses.required.length - 5} 件</li>` : ''}
-          </ul>
-        </div>
-      `;
-    }
-    
-    // 基礎専門科目
-    if (recommendedCourses.specializedBasic && recommendedCourses.specializedBasic.length > 0 && graduationCheck.missing.specializedBasic > 0) {
-      hasRecommendations = true;
-      html += `
-        <div class="recommendation-category">
-          <h4>基礎専門科目 (残り${graduationCheck.missing.specializedBasic}単位)</h4>
-          <ul>
-            ${recommendedCourses.specializedBasic.slice(0, 3).map(course => `<li>${course}</li>`).join('')}
-            ${recommendedCourses.specializedBasic.length > 3 ? `<li>...他 ${recommendedCourses.specializedBasic.length - 3} 件</li>` : ''}
-          </ul>
-        </div>
-      `;
-    }
-    
-    // 専門科目
-    if (recommendedCourses.specializedCore && recommendedCourses.specializedCore.length > 0 && graduationCheck.missing.specializedCore > 0) {
-      hasRecommendations = true;
-      html += `
-        <div class="recommendation-category">
-          <h4>固有専門科目 (残り${graduationCheck.missing.specializedCore}単位)</h4>
-          <ul>
-            ${recommendedCourses.specializedCore.slice(0, 3).map(course => `<li>${course}</li>`).join('')}
-            ${recommendedCourses.specializedCore.length > 3 ? `<li>...他 ${recommendedCourses.specializedCore.length - 3} 件</li>` : ''}
-          </ul>
-        </div>
-      `;
-    }
-    
-    // 推奨科目がない場合
-    if (!hasRecommendations) {
-      html += `<p style="text-align: center; padding: 10px;">現在、特に推奨科目はありません。</p>`;
     }
     
     html += `</div>`;
@@ -448,7 +390,6 @@ function openSettings() {
             <option value="2022">2022年度</option>
             <option value="2023">2023年度</option>
             <option value="2024">2024年度</option>
-            <option value="2025">2025年度</option>
           </select>
         </div>
         <div class="settings-actions">
@@ -502,4 +443,384 @@ function openSettings() {
       showErrorMessage('設定をリセットしました');
     });
   });
+}
+
+// popup.js に追加する関数
+
+// 単位データの要約表示に推奨科目を追加
+/*function displayCreditSummary(data) {
+  const summaryContent = document.getElementById('summary-content');
+  
+  // 単位データがない場合
+  if (!data || !data.credits) {
+    summaryContent.innerHTML = `
+      <p class="notice">単位データが見つかりません。</p>
+      <p>CAMPUS WEBで「科目一覧」を開いて単位チェックを実行してください。</p>
+    `;
+    return;
+  }
+  
+  // 単位データの表示（既存コード）
+  const credits = data.credits;
+  const graduationCheck = data.graduationCheck;
+  const requirements = data.requirements;
+  
+  let progressClass = 'progress-warning';
+  if (graduationCheck.progress.total >= 90) {
+    progressClass = 'progress-good';
+  } else if (graduationCheck.progress.total < 50) {
+    progressClass = 'progress-bad';
+  }
+  
+  // HTML生成（既存部分）
+  let html = `
+    <div class="summary-box">
+      <!-- 既存のHTML -->
+    </div>
+  `;
+  
+  // 不足単位と推奨科目セクションを追加
+  if (!graduationCheck.fulfilled) {
+    html += `
+      <div class="missing-credits">
+        <h4>不足単位:</h4>
+        <ul>
+    `;
+    
+    // 不足している区分を表示
+    if (graduationCheck.missing.foreignLanguage > 0) {
+      html += `<li>外国語科目: ${graduationCheck.missing.foreignLanguage}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.generalEducation > 0) {
+      html += `<li>教養科目: ${graduationCheck.missing.generalEducation}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.specializedBasic > 0) {
+      html += `<li>基礎専門科目: ${graduationCheck.missing.specializedBasic}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.specializedCommon > 0) {
+      html += `<li>共通専門科目: ${graduationCheck.missing.specializedCommon}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.specializedCore > 0) {
+      html += `<li>固有専門科目: ${graduationCheck.missing.specializedCore}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.totalSpecialized > 0) {
+      html += `<li>専門科目合計: ${graduationCheck.missing.totalSpecialized}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.total > 0) {
+      html += `<li>総単位数: ${graduationCheck.missing.total}単位</li>`;
+    }
+    
+    html += `
+        </ul>
+      </div>
+    `;
+  }
+  
+  // 必修科目の残りがある場合、推奨科目セクションに表示
+  if (credits.requiredCourses && credits.requiredCourses.remaining.length > 0) {
+    html += `
+      <div class="recommendations-section">
+        <h3>推奨科目</h3>
+        
+        <div class="recommendation-category required">
+          <h4>必修科目（優先的に履修すべき）</h4>
+          <ul>
+    `;
+    
+    credits.requiredCourses.remaining.forEach(course => {
+      html += `<li>${course}</li>`;
+    });
+    
+    html += `
+          </ul>
+        </div>
+      </div>
+    `;
+  }
+  
+  // 最終更新日時
+  html += `
+    <div class="last-updated">
+      <p>最終更新: ${new Date().toLocaleString()}</p>
+    </div>
+  `;
+  
+  summaryContent.innerHTML = html;
+  
+  // 詳細な科目一覧を見るためのボタンを追加
+  const viewDetailButton = document.createElement('button');
+  viewDetailButton.textContent = '詳細な科目一覧を見る';
+  viewDetailButton.className = 'btn btn-primary';
+  viewDetailButton.style.cssText = `
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 8px;
+    background-color: #006699;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  `;
+  
+  viewDetailButton.addEventListener('click', () => {
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {action: 'showDetailedRecommendations'});
+    });
+  });
+  
+  summaryContent.appendChild(viewDetailButton);
+}*/
+
+// popup.js のdisplayCreditSummary関数を修正
+
+// 単位データの要約表示
+function displayCreditSummary(data) {
+  const summaryContent = document.getElementById('summary-content');
+  
+  // 単位データがない場合
+  if (!data || !data.credits) {
+    summaryContent.innerHTML = `
+      <p class="notice">単位データが見つかりません。</p>
+      <p>CAMPUS WEBで「科目一覧」を開いて単位チェックを実行してください。</p>
+    `;
+    return;
+  }
+  
+  // 単位データの表示
+  const credits = data.credits;
+  const graduationCheck = data.graduationCheck;
+  const requirements = data.requirements;
+  const recommendations = data.recommendations;
+  
+  let progressClass = 'progress-warning';
+  if (graduationCheck.progress.total >= 90) {
+    progressClass = 'progress-good';
+  } else if (graduationCheck.progress.total < 50) {
+    progressClass = 'progress-bad';
+  }
+  
+  // HTML生成
+  let html = `
+    <div class="summary-box">
+      <div class="summary-row">
+        <span class="summary-label">総取得単位数:</span>
+        <span class="summary-value ${progressClass}">${credits.total} / ${requirements.total}</span>
+        <div class="summary-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${graduationCheck.progress.total}%"></div>
+          </div>
+          <span class="progress-text">${Math.round(graduationCheck.progress.total)}%</span>
+        </div>
+      </div>
+      
+      <div class="summary-details">
+  `;
+  
+  // 外国語科目
+  if (requirements.foreignLanguage) {
+    html += `
+      <div class="summary-row">
+        <span class="summary-label">外国語科目:</span>
+        <span class="summary-value">${credits.foreignLanguage} / ${requirements.foreignLanguage}</span>
+      </div>
+    `;
+  }
+  
+  // 教養科目
+  if (requirements.generalEducation) {
+    html += `
+      <div class="summary-row">
+        <span class="summary-label">教養科目:</span>
+        <span class="summary-value">${credits.generalEducation} / ${requirements.generalEducation}</span>
+      </div>
+    `;
+  }
+  
+  // 専門科目
+  const specializedTotal = (credits.specializedBasic || 0) + 
+                          (credits.specializedCommon || 0) + 
+                          (credits.specializedCore || 0) + 
+                          (credits.globalCareer || 0);
+  
+  html += `
+      <div class="summary-row">
+        <span class="summary-label">専門科目:</span>
+        <span class="summary-value">${specializedTotal} / ${requirements.totalSpecialized || 0}</span>
+      </div>
+    </div>
+  </div>
+  `;
+  
+  // 必修科目情報
+  if (credits.requiredCourses && credits.requiredCourses.remaining) {
+    const completedCount = credits.requiredCourses.completed.length;
+    const totalCount = completedCount + credits.requiredCourses.remaining.length;
+    
+    html += `
+    <div class="requirements-status">
+      <h3>必修科目取得状況</h3>
+      <div class="requirement-item ${completedCount === totalCount ? 'fulfilled' : 'not-fulfilled'}">
+        <span class="requirement-label">必修科目:</span>
+        <span class="requirement-value">${completedCount} / ${totalCount}</span>
+      </div>
+    `;
+    
+    if (credits.requiredCourses.remaining.length > 0) {
+      html += `
+        <div style="margin-top: 10px; font-size: 13px;">
+          <strong>残りの必修科目:</strong>
+          <ul style="padding-left: 20px; margin-top: 5px;">
+            ${credits.requiredCourses.remaining.map(course => `<li>${course}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+    
+    html += `</div>`;
+  }
+  
+  // 卒業要件充足状況
+  html += `
+    <div class="requirements-status">
+      <h3>卒業要件充足状況</h3>
+      <div class="requirement-item ${graduationCheck.fulfilled ? 'fulfilled' : 'not-fulfilled'}">
+        <span class="requirement-label">卒業要件:</span>
+        <span class="requirement-value">${graduationCheck.fulfilled ? '充足' : '不足'}</span>
+      </div>
+    </div>
+  `;
+  
+  // 不足単位と推奨科目セクションを追加
+  if (!graduationCheck.fulfilled) {
+    html += `
+      <div class="missing-credits">
+        <h4>不足単位:</h4>
+        <ul>
+    `;
+    
+    // 不足している区分を表示
+    if (graduationCheck.missing.foreignLanguage > 0) {
+      html += `<li>外国語科目: ${graduationCheck.missing.foreignLanguage}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.generalEducation > 0) {
+      html += `<li>教養科目: ${graduationCheck.missing.generalEducation}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.specializedBasic > 0) {
+      html += `<li>基礎専門科目: ${graduationCheck.missing.specializedBasic}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.specializedCommon > 0) {
+      html += `<li>共通専門科目: ${graduationCheck.missing.specializedCommon}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.specializedCore > 0) {
+      html += `<li>固有専門科目: ${graduationCheck.missing.specializedCore}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.totalSpecialized > 0) {
+      html += `<li>専門科目合計: ${graduationCheck.missing.totalSpecialized}単位</li>`;
+    }
+    
+    if (graduationCheck.missing.total > 0) {
+      html += `<li>総単位数: ${graduationCheck.missing.total}単位</li>`;
+    }
+    
+    html += `
+        </ul>
+      </div>
+    `;
+  }
+  
+  // 推奨科目セクションを追加
+  if (recommendations) {
+    html += `<div class="recommendations-section"><h3>推奨科目</h3>`;
+    
+    // 必修科目の残りがある場合
+    if (recommendations.required && recommendations.required.length > 0) {
+      html += `
+        <div class="recommendation-category required">
+          <h4>必修科目（優先的に履修すべき）</h4>
+          <ul>
+      `;
+      
+      recommendations.required.forEach(course => {
+        html += `<li>${course}</li>`;
+      });
+      
+      html += `</ul></div>`;
+    }
+    
+    // カテゴリ別推奨科目
+    const categories = [
+      { id: 'specializedCore', name: '専門科目' },
+      { id: 'specializedCommon', name: '共通専門科目' },
+      { id: 'specializedBasic', name: '基礎専門科目' },
+      { id: 'generalEducation', name: '教養科目' },
+      { id: 'foreignLanguage', name: '外国語科目' }
+    ];
+    
+    categories.forEach(category => {
+      if (recommendations[category.id] && recommendations[category.id].length > 0) {
+        html += `
+          <div class="recommendation-category ${category.id}">
+            <h4>${category.name}</h4>
+            <ul>
+        `;
+        
+        recommendations[category.id].slice(0, 5).forEach(course => {
+          html += `<li>${course}</li>`;
+        });
+        
+        if (recommendations[category.id].length > 5) {
+          html += `<li>他 ${recommendations[category.id].length - 5} 件...</li>`;
+        }
+        
+        html += `</ul></div>`;
+      }
+    });
+    
+    html += `</div>`;
+  }
+  
+  // 最終更新日時
+  html += `
+    <div class="last-updated">
+      <p>最終更新: ${new Date().toLocaleString()}</p>
+    </div>
+  `;
+  
+  summaryContent.innerHTML = html;
+  
+  // 詳細な科目一覧を見るためのボタンを追加
+  const viewDetailButton = document.createElement('button');
+  viewDetailButton.textContent = '詳細な科目一覧を見る';
+  viewDetailButton.className = 'btn btn-primary';
+  viewDetailButton.style.cssText = `
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 8px;
+    background-color: #006699;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  `;
+  
+  viewDetailButton.addEventListener('click', () => {
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {action: 'showDetailedRecommendations'});
+    });
+  });
+  
+  summaryContent.appendChild(viewDetailButton);
 }

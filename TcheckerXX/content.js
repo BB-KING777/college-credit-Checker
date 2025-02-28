@@ -1,4 +1,4 @@
-// content.js - キャンパスウェブのページで実行されるスクリプト
+// content.js - 改良版: JSONファイルから推奨科目を表示
 
 // 初期化
 function initialize() {
@@ -29,7 +29,6 @@ function initialize() {
   }
 }
 
-// 現在のページタイプを判定する関数
 function getCurrentPageType() {
   // ページのタイトル要素をチェック
   const titleElements = document.querySelectorAll('h1, div.title, div.subwin_title, .title_subwin_title');
@@ -83,13 +82,22 @@ async function handleCreditCheck(message, sendResponse) {
     // 卒業要件チェック
     const graduationCheck = await checkGraduationRequirements(creditsData, settings.requirements);
     
+    // 推奨科目の取得 (新機能)
+    const recommendedCourses = await getRecommendedCourses(
+      courseData.courses, 
+      settings, 
+      courseId, 
+      creditsData
+    );
+    
     // レスポンス送信
     sendResponse({ 
       success: true, 
       data: {
         credits: creditsData,
         graduationCheck,
-        requirements: settings.requirements.common
+        requirements: settings.requirements.common,
+        recommendedCourses: recommendedCourses // 新しく追加した推奨科目情報
       }
     });
   } catch (error) {
@@ -98,6 +106,7 @@ async function handleCreditCheck(message, sendResponse) {
   }
 }
 
+// 設定情報の取得
 // 設定情報の取得
 function getSettings(facultyId, departmentId) {
   return new Promise((resolve, reject) => {
@@ -132,7 +141,7 @@ function getSettings(facultyId, departmentId) {
           const categoriesData = result.fileContents[categoriesFile];
           
           if (!requirementsData || !categoriesData) {
-            reject(new Error('要件データまたはカテゴリデータが見つかりません'));
+            reject(new Error('要件ファイルまたはカテゴリファイルが見つかりません'));
             return;
           }
           
@@ -141,6 +150,7 @@ function getSettings(facultyId, departmentId) {
           resolve({
             faculty,
             department,
+            courseId,
             requirements: requirementsData.requirements[key],
             categories: categoriesData.courseCategories[key]
           });
@@ -200,7 +210,8 @@ function extractCourseData() {
         credits: 0,
         grade: '',
         semester: '',
-        completed: false
+        completed: false,
+        failed: false // F評価かどうかのフラグを追加
       };
       
       // テーブル構造に基づいてデータの取得方法を調整
@@ -232,10 +243,15 @@ function extractCourseData() {
       
       // 科目名に科目番号がついていることがあるので処理
       course.name = course.name.replace(/^\d+\s+/, '').trim();
+      // 科目名から末尾の * (遠隔授業マーク) を削除
+      course.name = course.name.replace(/\s*\*\s*$/, '').trim();
       
       // 単位取得状況の判定
       course.completed = course.grade !== '' && 
                            !['不可', '／', '-', 'F', ''].includes(course.grade);
+      
+      // F評価の判定を追加
+      course.failed = course.grade === 'F' || course.grade === '不可';
       
       // 有効なデータのみ追加
       if (course.name && course.name !== '') {
@@ -283,8 +299,13 @@ function determineCourseCategory(courseName, categories, courseId) {
     return 'specializedCommon';
   }
   
+  // キャリアグローバル科目
+  if (isInCategory('careerGlobal')) {
+    return 'careerGlobal';
+  }
+  
   // 専門科目（コースあり）
-  if (categories.hasCourses && categories.specializedCore) {
+  if (categories.specializedCore) {
     // 共通専門科目
     if (categories.specializedCore.common && 
         categories.specializedCore.common.includes(courseName)) {
@@ -297,18 +318,9 @@ function determineCourseCategory(courseName, categories, courseId) {
       return 'specializedCore';
     }
   }
-  // 専門科目（コースなし）
-  else if (!categories.hasCourses && isInCategory('specializedCore')) {
-    return 'specializedCore';
-  }
-  
-  // グローバルキャリア科目
-  if (isInCategory('globalCareer')) {
-    return 'globalCareer';
-  }
   
   // 判定できない場合はカテゴリ名をそのまま使用
-  return courseName.category || 'specializedCore';
+  return course.category || 'other';
 }
 
 // 区分ごとの単位数を集計する関数
@@ -322,13 +334,24 @@ async function calculateCredits(courses, settings, courseId) {
     specializedBasic: 0,
     specializedCommon: 0,
     specializedCore: 0,
-    globalCareer: 0,
+    careerGlobal: 0,
     total: 0,
     completedCourses: [],
     inProgressCourses: [],
+    failedCourses: [], // F評価を受けた科目一覧を追加
     requiredCourses: {
       completed: [],
       remaining: []
+    },
+    completedCoursesByCategory: {
+      // 区分ごとの取得済み科目を格納するオブジェクト
+      foreignLanguage: [],
+      generalEducation: [],
+      specializedBasic: [],
+      specializedCommon: [],
+      specializedCore: [],
+      careerGlobal: [],
+      other: []
     }
   };
   
@@ -343,18 +366,45 @@ async function calculateCredits(courses, settings, courseId) {
   
   // 区分ごとに単位を集計
   courses.forEach(course => {
+    // 科目区分の判定
+    let categoryKey = 'other';
+    
+    // 科目カテゴリの判定
+    for (const cat of ['foreignLanguage', 'generalEducation', 'specializedBasic', 'specializedCommon', 'careerGlobal']) {
+      if (categories[cat] && categories[cat].includes(course.name)) {
+        categoryKey = cat;
+        break;
+      }
+    }
+    
+    // 専門コア科目（共通）の判定
+    if (categoryKey === 'other' && categories.specializedCore) {
+      if (categories.specializedCore.common && categories.specializedCore.common.includes(course.name)) {
+        categoryKey = 'specializedCore';
+      }
+      // コース別専門科目の判定
+      else if (courseId && categories.specializedCore[courseId] && 
+               categories.specializedCore[courseId].includes(course.name)) {
+        categoryKey = 'specializedCore';
+      }
+    }
+    
+    // F評価の科目を記録
+    if (course.failed) {
+      result.failedCourses.push({...course, category: categoryKey});
+    }
+    
+    // 修得済みの科目のみ単位加算
     if (course.completed) {
-      result.completedCourses.push(course);
-      
-      // 科目区分の判定
-      const categoryKey = determineCourseCategory(course.name, categories, courseId);
+      result.completedCourses.push({...course, category: categoryKey});
+      result.completedCoursesByCategory[categoryKey].push(course.name);
       
       // 単位を加算
       if (result[categoryKey] !== undefined) {
         result[categoryKey] += course.credits;
       } else {
-        // 不明な区分の場合は専門科目に加算
-        result.specializedCore += course.credits;
+        // 不明な区分の場合はother
+        result.other += course.credits;
       }
       
       // 総単位数に加算
@@ -366,7 +416,7 @@ async function calculateCredits(courses, settings, courseId) {
       }
     } else if (course.grade === '') {
       // 現在履修中の科目
-      result.inProgressCourses.push(course);
+      result.inProgressCourses.push({...course, category: categoryKey});
     }
   });
   
@@ -389,8 +439,9 @@ async function checkGraduationRequirements(credits, requirements) {
     specializedBasic: reqs.specializedBasic ? Math.max(0, reqs.specializedBasic - credits.specializedBasic) : 0,
     specializedCommon: reqs.specializedCommon ? Math.max(0, reqs.specializedCommon - credits.specializedCommon) : 0,
     specializedCore: reqs.specializedCore ? Math.max(0, reqs.specializedCore - credits.specializedCore) : 0,
+    careerGlobal: reqs.careerGlobal ? Math.max(0, reqs.careerGlobal - credits.careerGlobal) : 0,
     totalSpecialized: reqs.totalSpecialized ? Math.max(0, reqs.totalSpecialized - 
-      (credits.specializedBasic + credits.specializedCommon + credits.specializedCore + credits.globalCareer)) : 0,
+      (credits.specializedBasic + credits.specializedCommon + credits.specializedCore + credits.careerGlobal)) : 0,
     total: reqs.total ? Math.max(0, reqs.total - credits.total) : 0
   };
   
@@ -401,8 +452,9 @@ async function checkGraduationRequirements(credits, requirements) {
     specializedBasic: reqs.specializedBasic ? Math.min(100, (credits.specializedBasic / reqs.specializedBasic) * 100) : 100,
     specializedCommon: reqs.specializedCommon ? Math.min(100, (credits.specializedCommon / reqs.specializedCommon) * 100) : 100,
     specializedCore: reqs.specializedCore ? Math.min(100, (credits.specializedCore / reqs.specializedCore) * 100) : 100,
+    careerGlobal: reqs.careerGlobal ? Math.min(100, (credits.careerGlobal / reqs.careerGlobal) * 100) : 100,
     totalSpecialized: reqs.totalSpecialized ? Math.min(100, ((credits.specializedBasic + credits.specializedCommon + 
-                        credits.specializedCore + credits.globalCareer) / reqs.totalSpecialized) * 100) : 100,
+                        credits.specializedCore + credits.careerGlobal) / reqs.totalSpecialized) * 100) : 100,
     total: reqs.total ? Math.min(100, (credits.total / reqs.total) * 100) : 100
   };
   
@@ -411,6 +463,113 @@ async function checkGraduationRequirements(credits, requirements) {
     missing,
     progress
   };
+}
+
+// 推奨科目の取得（新機能）
+async function getRecommendedCourses(courses, settings, courseId, creditsData) {
+  const categories = settings.categories;
+  const requirements = settings.requirements;
+  const result = {
+    required: [], // 必修科目
+    foreignLanguage: [], // 外国語科目の推奨
+    generalEducation: [], // 教養科目の推奨
+    specializedBasic: [], // 基礎専門科目の推奨
+    specializedCommon: [], // 共通専門科目の推奨
+    specializedCore: [], // 固有専門科目の推奨
+    careerGlobal: [], // キャリア・グローバル科目の推奨
+  };
+  
+  // 必修科目の未取得/F評価のものをリストアップ
+  let requiredCourses = [];
+  if (settings.department.hasCourses && courseId && 
+      requirements.courses && requirements.courses[courseId]) {
+    requiredCourses = requirements.courses[courseId].requiredCourses || [];
+  }
+  
+  // 履修済み科目名のセット
+  const takenCourseNames = new Set();
+  courses.forEach(course => {
+    takenCourseNames.add(course.name);
+  });
+  
+  // F評価科目名のセット
+  const failedCourseNames = new Set();
+  creditsData.failedCourses.forEach(course => {
+    failedCourseNames.add(course.name);
+  });
+  
+  // 必修科目で未履修・F評価のものを抽出
+  requiredCourses.forEach(courseName => {
+    if (failedCourseNames.has(courseName) || !takenCourseNames.has(courseName)) {
+      result.required.push(courseName);
+    }
+  });
+  
+  // 各区分の科目リストを取得
+  const categoryTypes = [
+    'foreignLanguage',
+    'generalEducation',
+    'specializedBasic',
+    'specializedCommon',
+    'careerGlobal'
+  ];
+  
+  // 各区分で未取得の科目をリストアップ
+  categoryTypes.forEach(categoryType => {
+    if (categories[categoryType]) {
+      // 区分の科目リスト取得
+      const categoryCourses = categories[categoryType];
+      
+      // 必要単位数と取得済み単位数
+      const requiredCredits = requirements.common[categoryType] || 0;
+      const obtainedCredits = creditsData[categoryType] || 0;
+      
+      // 不足単位があり、かつカテゴリに科目がある場合のみ処理
+      if (requiredCredits > obtainedCredits && categoryCourses && categoryCourses.length > 0) {
+        // 未履修・F評価の科目を抽出して推奨リストに追加
+        categoryCourses.forEach(courseName => {
+          if (failedCourseNames.has(courseName) || !takenCourseNames.has(courseName)) {
+            result[categoryType].push(courseName);
+          }
+        });
+      }
+    }
+  });
+  
+  // 専門コア科目（コース固有）の処理
+  if (categories.specializedCore && courseId && categories.specializedCore[courseId]) {
+    const coreCourses = categories.specializedCore[courseId];
+    const requiredCredits = requirements.common.specializedCore || 0;
+    const obtainedCredits = creditsData.specializedCore || 0;
+    
+    if (requiredCredits > obtainedCredits && coreCourses && coreCourses.length > 0) {
+      coreCourses.forEach(courseName => {
+        if (failedCourseNames.has(courseName) || !takenCourseNames.has(courseName)) {
+          result.specializedCore.push(courseName);
+        }
+      });
+    }
+  }
+  
+  // 専門コア科目（共通）の処理
+  if (categories.specializedCore && categories.specializedCore.common) {
+    const commonCoreCourses = categories.specializedCore.common;
+    const requiredCredits = requirements.common.specializedCore || 0;
+    const obtainedCredits = creditsData.specializedCore || 0;
+    
+    if (requiredCredits > obtainedCredits && commonCoreCourses && commonCoreCourses.length > 0) {
+      commonCoreCourses.forEach(courseName => {
+        if (failedCourseNames.has(courseName) || !takenCourseNames.has(courseName)) {
+          // すでに追加されていないか確認
+          if (!result.specializedCore.includes(courseName)) {
+            result.specializedCore.push(courseName);
+          }
+        }
+      });
+    }
+  }
+  
+  return result;
 }
 
 // ページロード完了時の処理
@@ -484,15 +643,24 @@ function createAnalysisButton() {
         settings.requirements
       );
       
-      // 結果表示
-      createResultUI(creditsData, graduationCheck, settings);
+      // 推奨科目の取得（新機能）
+      const recommendedCourses = await getRecommendedCourses(
+        courseData.courses,
+        settings,
+        settings.courseId,
+        creditsData
+      );
+      
+      // 結果表示 (推奨科目を含める)
+      createResultUI(creditsData, graduationCheck, settings, recommendedCourses);
       
       // データ保存
       chrome.storage.local.set({
         creditData: {
           credits: creditsData,
           graduationCheck,
-          requirements: settings.requirements.common
+          requirements: settings.requirements.common,
+          recommendedCourses // 推奨科目情報を保存
         },
         lastCheckedDate: new Date().toISOString()
       });
@@ -565,8 +733,8 @@ function getCurrentSettings() {
   });
 }
 
-// 単位解析結果UIの作成
-function createResultUI(credits, graduationCheck, settings) {
+// 単位解析結果UIの作成（推奨科目表示機能を追加）
+function createResultUI(credits, graduationCheck, settings, recommendedCourses) {
   // 既存のUI要素を削除
   const existingUI = document.getElementById('credit-checker-result');
   if (existingUI) {
@@ -650,13 +818,17 @@ function createResultUI(credits, graduationCheck, settings) {
     const percent = progressPercent !== undefined ? progressPercent : 
                    (required > 0 ? Math.min(100, (current / required) * 100) : 100);
     
+    // 残り単位数を表示
+    const remaining = Math.max(0, required - current);
+    const remainingText = remaining > 0 ? `残り${remaining}単位` : '充足';
+    
     return `
       <tr>
         <td style="padding: 8px; text-align: left; border-bottom: 1px solid #eee;">${label}</td>
-        <td style="padding: 8px; text-align: right; border-bottom: 1px solid #eee; font-weight: bold;">${current} / ${required}</td>
+        <td style="padding: 8px; text-align: right; border-bottom: 1px solid #eee; font-weight: bold;">${current} / ${required} (${remainingText})</td>
         <td style="padding: 8px; border-bottom: 1px solid #eee; width: 50%;">
           <div style="background-color: #f0f0f0; height: 12px; border-radius: 6px; overflow: hidden;">
-            <div style="background-color: #4CAF50; height: 100%; width: ${percent}%;"></div>
+            <div style="background-color: ${percent < 100 ? '#4CAF50' : '#2E7D32'}; height: 100%; width: ${percent}%;"></div>
           </div>
         </td>
       </tr>
@@ -684,17 +856,21 @@ function createResultUI(credits, graduationCheck, settings) {
     tableHTML += addCreditRow('固有専門科目', credits.specializedCore, requirements.specializedCore, graduationCheck.progress.specializedCore);
   }
   
+  if (requirements.careerGlobal) {
+    tableHTML += addCreditRow('キャリア・グローバル科目', credits.careerGlobal, requirements.careerGlobal, graduationCheck.progress.careerGlobal);
+  }
+  
   // 専門科目合計
   if (requirements.totalSpecialized) {
     const specializedTotal = (credits.specializedBasic || 0) + 
                             (credits.specializedCommon || 0) + 
                             (credits.specializedCore || 0) + 
-                            (credits.globalCareer || 0);
+                            (credits.careerGlobal || 0);
     
     tableHTML += `
       <tr style="background-color: #f9f9f9;">
         <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; font-weight: bold;">専門科目合計</td>
-        <td style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd; font-weight: bold;">${specializedTotal} / ${requirements.totalSpecialized}</td>
+        <td style="padding: 8px; text-align: right; border-bottom: 1px solid #ddd; font-weight: bold;">${specializedTotal} / ${requirements.totalSpecialized} (残り${Math.max(0, requirements.totalSpecialized - specializedTotal)}単位)</td>
         <td style="padding: 8px; border-bottom: 1px solid #ddd; width: 50%;">
           <div style="background-color: #f0f0f0; height: 12px; border-radius: 6px; overflow: hidden;">
             <div style="background-color: #006699; height: 100%; width: ${graduationCheck.progress.totalSpecialized}%;"></div>
@@ -708,7 +884,7 @@ function createResultUI(credits, graduationCheck, settings) {
   tableHTML += `
     <tr style="background-color: #f1f8e9;">
       <td style="padding: 10px; text-align: left; font-weight: bold; font-size: 16px;">総合計</td>
-      <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 16px;">${credits.total} / ${requirements.total}</td>
+      <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 16px;">${credits.total} / ${requirements.total} (残り${Math.max(0, requirements.total - credits.total)}単位)</td>
       <td style="padding: 10px; width: 50%;">
         <div style="background-color: #f0f0f0; height: 14px; border-radius: 7px; overflow: hidden;">
           <div style="background-color: #2E7D32; height: 100%; width: ${graduationCheck.progress.total}%;"></div>
@@ -795,6 +971,193 @@ function createResultUI(credits, graduationCheck, settings) {
     container.appendChild(requiredSection);
   }
   
+  // F評価科目セクション
+  if (credits.failedCourses && credits.failedCourses.length > 0) {
+    const failedSection = document.createElement('div');
+    failedSection.style.cssText = `margin-bottom: 25px;`;
+    
+    // タイトル
+    const failedTitle = document.createElement('h3');
+    failedTitle.style.cssText = `
+      margin-top: 0;
+      color: #333;
+      border-left: 4px solid #c62828;
+      padding-left: 10px;
+      font-size: 18px;
+    `;
+    failedTitle.textContent = 'F評価取得科目';
+    failedSection.appendChild(failedTitle);
+    
+    // 説明テキスト
+    const failedDesc = document.createElement('p');
+    failedDesc.style.cssText = `margin-top: 10px; color: #c62828;`;
+    failedDesc.textContent = '以下の科目はF評価を受けています。再履修をご検討ください。';
+    failedSection.appendChild(failedDesc);
+    
+    // F評価科目リスト
+    const failedList = document.createElement('ul');
+    failedList.style.cssText = `
+      padding-left: 25px;
+      margin-top: 5px;
+    `;
+    
+    credits.failedCourses.forEach(course => {
+      const item = document.createElement('li');
+      item.style.cssText = `margin-bottom: 3px;`;
+      item.textContent = `${course.name}（${getCategoryLabel(course.category)}）`;
+      failedList.appendChild(item);
+    });
+    
+    failedSection.appendChild(failedList);
+    container.appendChild(failedSection);
+  }
+  
+  // 推奨科目セクション (新機能)
+  const recommendedSection = document.createElement('div');
+  recommendedSection.style.cssText = `margin-bottom: 25px;`;
+  
+  // タイトル
+  const recommendedTitle = document.createElement('h3');
+  recommendedTitle.style.cssText = `
+    margin-top: 0;
+    color: #333;
+    border-left: 4px solid #006699;
+    padding-left: 10px;
+    font-size: 18px;
+  `;
+  recommendedTitle.textContent = '推奨履修科目';
+  recommendedSection.appendChild(recommendedTitle);
+  
+  // 説明テキスト
+  const recommendedDesc = document.createElement('p');
+  recommendedDesc.style.cssText = `margin: 10px 0; font-size: 14px;`;
+  recommendedDesc.textContent = '区分ごとの単位充足状況に基づき、以下の科目の履修を推奨します。';
+  recommendedSection.appendChild(recommendedDesc);
+  
+  // 推奨科目を表示する関数
+  const addRecommendedCategory = (title, courses, categoryKey) => {
+    if (!courses || courses.length === 0) return false;
+    
+    const missing = graduationCheck.missing[categoryKey];
+    if (missing <= 0 && categoryKey !== 'required') return false;
+    
+    const categoryContainer = document.createElement('div');
+    categoryContainer.style.cssText = `
+      margin: 15px 0;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: ${categoryKey === 'required' ? '#fff8e1' : '#f5f5f5'};
+      border: 1px solid ${categoryKey === 'required' ? '#ffe082' : '#e0e0e0'};
+    `;
+    
+    // カテゴリタイトル
+    const categoryTitle = document.createElement('h4');
+    categoryTitle.style.cssText = `
+      margin: 0 0 10px 0;
+      font-size: 15px;
+      color: ${categoryKey === 'required' ? '#ff8f00' : '#333'};
+    `;
+    
+    // 必修科目またはその他の区分科目で表示内容を変える
+    if (categoryKey === 'required') {
+      categoryTitle.textContent = title;
+    } else {
+      categoryTitle.textContent = `${title}（残り${missing}単位）`;
+    }
+    
+    categoryContainer.appendChild(categoryTitle);
+    
+    // 科目リスト
+    const courseList = document.createElement('ul');
+    courseList.style.cssText = `
+      padding-left: 20px;
+      margin: 0;
+    `;
+    
+    // 表示科目数を制限（最大10件まで）
+    const displayCourses = courses.slice(0, 10);
+    
+    displayCourses.forEach(course => {
+      const item = document.createElement('li');
+      item.style.cssText = `margin-bottom: 3px; font-size: 14px;`;
+      item.textContent = course;
+      courseList.appendChild(item);
+    });
+    
+    // 件数が多い場合は省略表示
+    if (courses.length > 10) {
+      const more = document.createElement('li');
+      more.style.cssText = `
+        margin-top: 5px;
+        font-style: italic;
+        font-size: 13px;
+        color: #666;
+      `;
+      more.textContent = `他 ${courses.length - 10} 件`;
+      courseList.appendChild(more);
+    }
+    
+    categoryContainer.appendChild(courseList);
+    recommendedSection.appendChild(categoryContainer);
+    return true;
+  };
+  
+  // 各区分の推奨科目を表示
+  let hasRecommendations = false;
+  
+  // 必修科目
+  if (addRecommendedCategory('必修科目（未取得）', recommendedCourses.required, 'required')) {
+    hasRecommendations = true;
+  }
+  
+  // 基礎専門科目
+  if (addRecommendedCategory('基礎専門科目', recommendedCourses.specializedBasic, 'specializedBasic')) {
+    hasRecommendations = true;
+  }
+  
+  // 共通専門科目
+  if (addRecommendedCategory('共通専門科目', recommendedCourses.specializedCommon, 'specializedCommon')) {
+    hasRecommendations = true;
+  }
+  
+  // 固有専門科目
+  if (addRecommendedCategory('固有専門科目', recommendedCourses.specializedCore, 'specializedCore')) {
+    hasRecommendations = true;
+  }
+  
+  // 外国語科目
+  if (addRecommendedCategory('外国語科目', recommendedCourses.foreignLanguage, 'foreignLanguage')) {
+    hasRecommendations = true;
+  }
+  
+  // 教養科目
+  if (addRecommendedCategory('教養科目', recommendedCourses.generalEducation, 'generalEducation')) {
+    hasRecommendations = true;
+  }
+  
+  // キャリア・グローバル科目
+  if (addRecommendedCategory('キャリア・グローバル科目', recommendedCourses.careerGlobal, 'careerGlobal')) {
+    hasRecommendations = true;
+  }
+  
+  // 推奨科目がない場合
+  if (!hasRecommendations) {
+    const noRecommendation = document.createElement('p');
+    noRecommendation.style.cssText = `
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 5px;
+      color: #2e7d32;
+      text-align: center;
+      font-weight: bold;
+      margin: 15px 0;
+    `;
+    noRecommendation.textContent = '現在、特に推奨科目はありません。';
+    recommendedSection.appendChild(noRecommendation);
+  }
+  
+  container.appendChild(recommendedSection);
+  
   // 卒業要件セクション
   const gradSection = document.createElement('div');
   gradSection.style.cssText = `margin-bottom: 25px;`;
@@ -862,6 +1225,10 @@ function createResultUI(credits, graduationCheck, settings) {
       missingHTML += `<li>固有専門科目: ${graduationCheck.missing.specializedCore}単位</li>`;
     }
     
+    if (graduationCheck.missing.careerGlobal > 0) {
+      missingHTML += `<li>キャリア・グローバル科目: ${graduationCheck.missing.careerGlobal}単位</li>`;
+    }
+    
     if (graduationCheck.missing.totalSpecialized > 0) {
       missingHTML += `<li>専門科目合計: ${graduationCheck.missing.totalSpecialized}単位</li>`;
     }
@@ -916,5 +1283,19 @@ function createResultUI(credits, graduationCheck, settings) {
   document.body.appendChild(container);
 }
 
-// 初期化実行
+// カテゴリキーから表示用ラベルを取得する関数
+function getCategoryLabel(categoryKey) {
+  const labels = {
+    'foreignLanguage': '外国語科目',
+    'generalEducation': '教養科目',
+    'specializedBasic': '基礎専門科目',
+    'specializedCommon': '共通専門科目',
+    'specializedCore': '固有専門科目',
+    'careerGlobal': 'キャリア・グローバル科目',
+    'other': 'その他'
+  };
+  
+  return labels[categoryKey] || categoryKey;
+}
+
 initialize();

@@ -1294,20 +1294,6 @@ nav ul {
   }
 }
 
-/* 大画面向け */
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1200px;
-  }
-  
-  .hero-text h1 {
-    font-size: 3.5rem;
-  }
-}2rem;
-  border-radius: 15px;
-  flex-grow: 1;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-}
 
 .step-title {
   font-size: 1.5rem;

@@ -1927,3 +1927,378 @@ nav ul {
   color: #333;
   line-height: 1.6;
 }
+
+/* 単位チェッカーアニメーション用スタイル（修正版） */
+
+/* ヒーローセクションのレイアウト調整 */
+.hero-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 0;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 300px;
+  padding-right: 2rem;
+}
+
+/* デモ表示エリアのスタイル */
+.credit-checker-demo {
+  flex: 1;
+  min-width: 340px;
+  max-width: 450px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+  height: 480px; /* 高さを少し増やして見切れを防止 */
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+}
+
+/* デモヘッダー */
+.demo-header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.demo-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.demo-status {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+/* コンテンツ表示エリア */
+.demo-content {
+  padding: 1.5rem;
+  height: calc(100% - 60px);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ステータスリボン */
+.status-ribbon {
+  position: absolute;
+  top: 70px;
+  right: -35px;
+  background-color: var(--success);
+  color: white;
+  padding: 0.5rem 2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transform: rotate(45deg);
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+/* 各パネルの共通スタイル */
+.credit-status-panel, .required-courses-panel, .recommended-courses-panel {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  visibility: hidden;
+  color: #333; /* すべてのパネル内のテキスト色を明確に設定 */
+}
+
+.status-title {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.status-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: var(--secondary);
+}
+
+/* 円グラフ */
+.credit-chart {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.chart-container {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  display: inline-block;
+}
+
+.chart-svg {
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.chart-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+/* 区分別単位表示 */
+.credit-details {
+  margin-top: 2rem;
+}
+
+.credit-category {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.category-name {
+  width: 30%;
+  font-size: 0.9rem;
+  color: #333; /* テキスト色を明確に */
+}
+
+.category-progress-container {
+  width: 50%;
+  background-color: #eee;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0 0.5rem;
+}
+
+.category-progress {
+  height: 100%;
+  background-color: var(--secondary);
+  border-radius: 6px;
+  transition: width 1s ease;
+}
+
+.category-count {
+  width: 20%;
+  font-size: 0.9rem;
+  text-align: right;
+  color: #333; /* テキスト色を明確に */
+}
+
+/* 必修科目パネル */
+.required-progress-container {
+  background-color: #eee;
+  height: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.required-progress {
+  height: 100%;
+  background-color: var(--secondary);
+  border-radius: 8px;
+  width: 0;
+  transition: width 1s ease;
+}
+
+.required-count {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #333; /* テキスト色を明確に */
+}
+
+.remaining-courses h4 {
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.required-list {
+  list-style: none;
+  padding: 0;
+}
+
+.required-list li {
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #333; /* テキスト色を明確に */
+}
+
+.required-list li::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+/* 推奨履修科目 */
+.course-groups {
+  max-height: 320px; /* 高さを少し増やして見切れを防止 */
+  overflow-y: auto;
+}
+
+.course-group {
+  margin-bottom: 1.5rem;
+}
+
+.group-title {
+  font-size: 1rem;
+  color: var(--primary);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #eee;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem; /* 下部のマージンを増やして見切れを防止 */
+}
+
+.course-list li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.9rem;
+  color: #333; /* テキスト色を明確に */
+}
+
+.course-list li::before {
+  content: '●';
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+  font-size: 0.7rem;
+}
+
+/* アニメーション用の表示状態クラス */
+.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+/* スクロールバーのカスタマイズ */
+.course-groups::-webkit-scrollbar {
+  width: 6px;
+}
+
+.course-groups::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.course-groups::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.course-groups::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 991px) {
+  .hero-content {
+    flex-direction: column;
+  }
+  
+  .hero-text {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .credit-checker-demo {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* スマホ向け最適化 */
+@media (max-width: 480px) {
+  .credit-checker-demo {
+    min-width: 280px;
+    height: 500px; /* モバイルでは高さを増やす */
+  }
+  
+  .credit-category {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  
+  .category-name {
+    width: 100%;
+    margin-bottom: 0.3rem;
+  }
+  
+  .category-progress-container {
+    width: 100%;
+    margin: 0.3rem 0;
+  }
+  
+  .category-count {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* アニメーション用の表示状態クラス */
+.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 991px) {
+  .hero-content {
+    flex-direction: column;
+  }
+  
+  .hero-text {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .credit-checker-demo {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

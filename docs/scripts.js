@@ -192,3 +192,258 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// 単位チェッカーのアニメーション用スクリプト（修正版）
+document.addEventListener('DOMContentLoaded', function() {
+  // すでに読み込み済みのscripts.jsの処理を実行した後に実行される
+  
+  // アニメーションのタイミング設定
+  setTimeout(startCreditAnimation, 1500); // 少し長めの初期遅延
+  
+  // サンプルデータ（これは実際のデータではなくデモ用）
+  const satisfiedData = {
+    total: 112,
+    required: 124,
+    general: {
+      count: 12,
+      required: 14
+    },
+    foreign: {
+      count: 10,
+      required: 10
+    },
+    basic: {
+      count: 16,
+      required: 20
+    },
+    advanced: {
+      count: 74,
+      required: 80
+    },
+    requiredCourses: {
+      count: 5,
+      total: 7,
+      remaining: ["卒業研究2", "卒業研究3"]
+    },
+    isGraduationPossible: false
+  };
+  
+  // 推奨科目リスト（サンプル）
+  const recommendedCourses = {
+    required: ["卒業研究2", "卒業研究3"],
+    basic: ["情報基礎数学", "数学4", "フーリエ解析", "物理1"],
+    advanced: ["論理回路", "コンピュータネットワーク", "計算機構成論", "デジタル信号処理"]
+  };
+
+  // アニメーション開始
+  function startCreditAnimation() {
+    // ステータスの更新
+    updateStatus("分析完了");
+    
+    // 単位状況パネルの表示
+    showPanel('creditStatusPanel');
+    
+    // 単位数のアニメーション
+    animateNumbers();
+    
+    // 2.5秒後にリボン表示
+    setTimeout(function() {
+      const ribbon = document.getElementById('statusRibbon');
+      ribbon.textContent = satisfiedData.isGraduationPossible ? "卒業要件を満たしています" : "卒業要件を満たしていません";
+      ribbon.style.backgroundColor = satisfiedData.isGraduationPossible ? "var(--success)" : "var(--warning)";
+      ribbon.style.opacity = "1";
+      
+      // ステータスタイトルの更新
+      document.getElementById('statusTitle').textContent = satisfiedData.isGraduationPossible ? 
+        "単位取得状況（卒業可能）" : "単位取得状況（あと12単位）";
+    }, 2500);
+    
+    // 6秒後に必修科目パネルに切り替え
+    setTimeout(function() {
+      hidePanel('creditStatusPanel');
+      
+      // 0.5秒の遅延を入れて滑らかに表示
+      setTimeout(function() {
+        showPanel('requiredCoursesPanel');
+        animateRequiredCourses();
+      }, 500);
+    }, 6000);
+    
+    // 12秒後に推奨履修科目パネルに切り替え
+    setTimeout(function() {
+      hidePanel('requiredCoursesPanel');
+      
+      // 0.5秒の遅延を入れて滑らかに表示
+      setTimeout(function() {
+        showPanel('recommendedCoursesPanel');
+        populateRecommendedCourses();
+      }, 500);
+    }, 12000);
+    
+    // 18秒後にアニメーションを最初から繰り返す
+    setTimeout(function() {
+      hidePanel('recommendedCoursesPanel');
+      document.getElementById('statusRibbon').style.opacity = "0";
+      
+      // 1秒の遅延を入れてから次のサイクルを開始
+      setTimeout(function() {
+        resetAnimation();
+        setTimeout(startCreditAnimation, 500);
+      }, 1000);
+    }, 18000);
+  }
+  
+  // ステータス表示の更新
+  function updateStatus(text) {
+    const status = document.getElementById('demoStatus');
+    status.textContent = text;
+  }
+  
+  // パネル表示
+  function showPanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.add('is-visible');
+  }
+  
+  // パネル非表示
+  function hidePanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.remove('is-visible');
+  }
+  
+  // 数値アニメーション
+  function animateNumbers() {
+    // 円グラフのアニメーション
+    const progressCircle = document.getElementById('progressCircle');
+    const circumference = 2 * Math.PI * 45; // 2πr
+    const offset = circumference - (satisfiedData.total / satisfiedData.required) * circumference;
+    
+    progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+    progressCircle.style.strokeDashoffset = circumference;
+    
+    // ゼロからアニメーション
+    let count = 0;
+    const countDuration = 2000; // ミリ秒 (少し長くして見やすく)
+    const interval = 30; // ミリ秒ごとに更新
+    const steps = countDuration / interval;
+    const increment = satisfiedData.total / steps;
+    
+    const counter = setInterval(function() {
+      count += increment;
+      if (count >= satisfiedData.total) {
+        count = satisfiedData.total;
+        clearInterval(counter);
+      }
+      
+      // カウント表示の更新
+      document.getElementById('creditCount').textContent = Math.round(count);
+      
+      // 円グラフの更新
+      const currentOffset = circumference - (count / satisfiedData.required) * circumference;
+      progressCircle.style.strokeDashoffset = currentOffset;
+      
+      // 各カテゴリのプログレスバーを更新
+      updateCategoryProgress('progressGeneral', 'generalCount', count / satisfiedData.total * satisfiedData.general.count, satisfiedData.general.count, satisfiedData.general.required);
+      updateCategoryProgress('progressForeign', 'foreignCount', count / satisfiedData.total * satisfiedData.foreign.count, satisfiedData.foreign.count, satisfiedData.foreign.required);
+      updateCategoryProgress('progressBasic', 'basicCount', count / satisfiedData.total * satisfiedData.basic.count, satisfiedData.basic.count, satisfiedData.basic.required);
+      updateCategoryProgress('progressAdvanced', 'advancedCount', count / satisfiedData.total * satisfiedData.advanced.count, satisfiedData.advanced.count, satisfiedData.advanced.required);
+      
+    }, interval);
+  }
+  
+  // カテゴリープログレスの更新
+  function updateCategoryProgress(progressId, countId, currentCount, totalCount, requiredCount) {
+    document.getElementById(progressId).style.width = `${(currentCount / requiredCount) * 100}%`;
+    document.getElementById(countId).textContent = Math.round(currentCount);
+  }
+  
+  // 必修科目アニメーション
+  function animateRequiredCourses() {
+    // プログレスバーのアニメーション
+    const requiredProgress = document.getElementById('requiredProgress');
+    requiredProgress.style.width = `${(satisfiedData.requiredCourses.count / satisfiedData.requiredCourses.total) * 100}%`;
+    
+    // カウントの表示
+    document.getElementById('requiredCount').textContent = satisfiedData.requiredCourses.count;
+    document.getElementById('requiredTotal').textContent = satisfiedData.requiredCourses.total;
+    
+    // 残りの必修科目リストの表示
+    const requiredList = document.getElementById('requiredList');
+    requiredList.innerHTML = ''; // リストのクリア
+    
+    // 少し遅延させて順番に表示
+    satisfiedData.requiredCourses.remaining.forEach((course, index) => {
+      setTimeout(() => {
+        const li = document.createElement('li');
+        li.textContent = course;
+        requiredList.appendChild(li);
+      }, index * 300); // 300msずつ遅延
+    });
+  }
+  
+  // 推奨履修科目の表示
+  function populateRecommendedCourses() {
+    // 必修科目リスト
+    const requiredList = document.getElementById('recommendedRequiredList');
+    requiredList.innerHTML = '';
+    
+    // 専門基礎科目リスト
+    const basicList = document.getElementById('recommendedBasicList');
+    basicList.innerHTML = '';
+    
+    // 専門科目リスト
+    const advancedList = document.getElementById('recommendedAdvancedList');
+    advancedList.innerHTML = '';
+    
+    // 各カテゴリを少し遅延させて表示
+    setTimeout(() => {
+      recommendedCourses.required.forEach((course, index) => {
+        setTimeout(() => {
+          const li = document.createElement('li');
+          li.textContent = course;
+          requiredList.appendChild(li);
+        }, index * 200);
+      });
+    }, 300);
+    
+    setTimeout(() => {
+      recommendedCourses.basic.forEach((course, index) => {
+        setTimeout(() => {
+          const li = document.createElement('li');
+          li.textContent = course;
+          basicList.appendChild(li);
+        }, index * 150);
+      });
+    }, 800);
+    
+    setTimeout(() => {
+      recommendedCourses.advanced.forEach((course, index) => {
+        setTimeout(() => {
+          const li = document.createElement('li');
+          li.textContent = course;
+          advancedList.appendChild(li);
+        }, index * 150);
+      });
+    }, 1300);
+  }
+  
+  // アニメーションのリセット
+  function resetAnimation() {
+    // カウンターのリセット
+    document.getElementById('creditCount').textContent = '0';
+    document.getElementById('generalCount').textContent = '0';
+    document.getElementById('foreignCount').textContent = '0';
+    document.getElementById('basicCount').textContent = '0';
+    document.getElementById('advancedCount').textContent = '0';
+    
+    // プログレスバーのリセット
+    document.getElementById('progressCircle').style.strokeDashoffset = '283';
+    document.getElementById('progressGeneral').style.width = '0%';
+    document.getElementById('progressForeign').style.width = '0%';
+    document.getElementById('progressBasic').style.width = '0%';
+    document.getElementById('progressAdvanced').style.width = '0%';
+    
+    // ステータスのリセット
+    updateStatus("分析中...");
+  }
+});

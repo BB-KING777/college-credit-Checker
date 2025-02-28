@@ -5,6 +5,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>立命館大学単位チェッカー - 公式サイト</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* アニメーション用の追加スタイル */
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* 背景アニメーションの要素 */
+    .animated-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      overflow: hidden;
+    }
+    
+    .animated-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 0.3;
+      z-index: 1;
+    }
+    
+    .shape-1 {
+      width: 150px;
+      height: 150px;
+      top: -20px;
+      left: 10%;
+      animation: float 20s linear infinite;
+    }
+    
+    .shape-2 {
+      width: 80px;
+      height: 80px;
+      top: 30%;
+      left: 60%;
+      animation: float 15s linear infinite;
+    }
+    
+    .shape-3 {
+      width: 120px;
+      height: 120px;
+      bottom: 20%;
+      right: 10%;
+      animation: float 25s linear infinite;
+    }
+    
+    .shape-4 {
+      width: 100px;
+      height: 100px;
+      top: 60%;
+      left: 5%;
+      animation: float 18s linear infinite;
+    }
+    
+    /* 波アニメーション */
+    .wave-container {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
+    }
+    
+    .wave {
+      position: absolute;
+      width: 200%;
+      height: 100px;
+      bottom: 0;
+      left: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255, 255, 255, 0.1)" d="M0,192L40,181.3C80,171,160,149,240,149.3C320,149,400,171,480,165.3C560,160,640,128,720,133.3C800,139,880,181,960,176C1040,171,1120,117,1200,90.7C1280,64,1360,64,1400,64L1440,64L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>');
+      background-repeat: repeat-x;
+      animation: wave 20s linear infinite;
+    }
+    
+    .wave-2 {
+      bottom: -10px;
+      opacity: 0.3;
+      animation: wave 15s linear infinite;
+      animation-delay: -5s;
+    }
+    
+    .wave-3 {
+      bottom: -20px;
+      opacity: 0.2;
+      animation: wave 30s linear infinite;
+      animation-delay: -2s;
+    }
+    
+    /* 浮遊する数字や記号 - 単位や学習をイメージ */
+    .floating-symbols {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .symbol {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.15);
+      font-weight: bold;
+      transform-origin: center;
+    }
+    
+    .symbol-1 {
+      font-size: 30px;
+      top: 20%;
+      left: 75%;
+      animation: symbolFloat 30s ease-in-out infinite;
+    }
+    
+    .symbol-2 {
+      font-size: 24px;
+      top: 60%;
+      left: 30%;
+      animation: symbolFloat 25s ease-in-out infinite;
+      animation-delay: -5s;
+    }
+    
+    .symbol-3 {
+      font-size: 36px;
+      top: 30%;
+      left: 20%;
+      animation: symbolFloat 35s ease-in-out infinite;
+      animation-delay: -8s;
+    }
+    
+    .symbol-4 {
+      font-size: 28px;
+      top: 70%;
+      left: 80%;
+      animation: symbolFloat 20s ease-in-out infinite;
+      animation-delay: -12s;
+    }
+    
+    /* ヒーローコンテンツの位置調整 */
+    .hero-content {
+      position: relative;
+      z-index: 5;
+    }
+    
+    /* アニメーションキーフレーム */
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      25% {
+        transform: translate(50px, 30px) rotate(90deg);
+      }
+      50% {
+        transform: translate(20px, 60px) rotate(180deg);
+      }
+      75% {
+        transform: translate(-30px, 30px) rotate(270deg);
+      }
+      100% {
+        transform: translate(0, 0) rotate(360deg);
+      }
+    }
+    
+    @keyframes wave {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+    
+    @keyframes symbolFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-30px) rotate(10deg);
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -38,7 +220,30 @@
   </header>
   
   <section class="hero">
-    <div class="hero-pattern"></div>
+    <!-- アニメーション背景 -->
+    <div class="animated-bg">
+      <!-- 浮遊する形 -->
+      <div class="animated-shape shape-1"></div>
+      <div class="animated-shape shape-2"></div>
+      <div class="animated-shape shape-3"></div>
+      <div class="animated-shape shape-4"></div>
+      
+      <!-- 浮遊する数字や記号 - 単位や学習をイメージ -->
+      <div class="floating-symbols">
+        <div class="symbol symbol-1">A+</div>
+        <div class="symbol symbol-2">124</div>
+        <div class="symbol symbol-3">✓</div>
+        <div class="symbol symbol-4">卒業</div>
+      </div>
+      
+      <!-- 波アニメーション -->
+      <div class="wave-container">
+        <div class="wave wave-1"></div>
+        <div class="wave wave-2"></div>
+        <div class="wave wave-3"></div>
+      </div>
+    </div>
+    
     <div class="container hero-content">
       <div class="hero-text">
         <h1>卒業に必要な単位を<br>かんたんチェック</h1>
@@ -46,8 +251,116 @@
         <a href="download.html" class="btn">GitHubからダウンロード</a>
         <a href="usage.html" class="btn btn-outline">使い方を見る</a>
       </div>
-      <div class="hero-image">
-        <img src="logo.png" alt="立命館大学単位チェッカー">
+      
+      <!-- 単位チェッカーのアニメーション表示部分 -->
+      <div class="credit-checker-demo">
+        <div class="demo-header">
+          <div class="demo-title">単位チェッカー</div>
+          <div id="demoStatus" class="demo-status">分析中...</div>
+        </div>
+        
+        <!-- アニメーション表示エリア -->
+        <div class="demo-content">
+          <!-- 単位取得状況表示 -->
+          <div id="creditStatusPanel" class="credit-status-panel">
+            <h3 id="statusTitle" class="status-title">単位取得状況</h3>
+            
+            <!-- 円グラフ -->
+            <div class="credit-chart">
+              <div class="chart-container">
+                <svg viewBox="0 0 100 100" class="chart-svg">
+                  <circle cx="50" cy="50" r="45" fill="transparent" stroke="#eee" stroke-width="10" />
+                  <circle id="progressCircle" cx="50" cy="50" r="45" fill="transparent" stroke="#56ab2f" stroke-width="10" stroke-dasharray="0 283" stroke-dashoffset="0" />
+                </svg>
+                <div class="chart-text">
+                  <span id="creditCount">0</span>/<span id="creditRequired">124</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 区分別単位表示 -->
+            <div class="credit-details">
+              <div class="credit-category">
+                <div class="category-name">教養科目</div>
+                <div class="category-progress-container">
+                  <div id="progressGeneral" class="category-progress" style="width: 0%"></div>
+                </div>
+                <div class="category-count"><span id="generalCount">0</span>/<span id="generalRequired">14</span></div>
+              </div>
+              
+              <div class="credit-category">
+                <div class="category-name">外国語科目</div>
+                <div class="category-progress-container">
+                  <div id="progressForeign" class="category-progress" style="width: 0%"></div>
+                </div>
+                <div class="category-count"><span id="foreignCount">0</span>/<span id="foreignRequired">10</span></div>
+              </div>
+              
+              <div class="credit-category">
+                <div class="category-name">専門基礎科目</div>
+                <div class="category-progress-container">
+                  <div id="progressBasic" class="category-progress" style="width: 0%"></div>
+                </div>
+                <div class="category-count"><span id="basicCount">0</span>/<span id="basicRequired">20</span></div>
+              </div>
+              
+              <div class="credit-category">
+                <div class="category-name">専門科目</div>
+                <div class="category-progress-container">
+                  <div id="progressAdvanced" class="category-progress" style="width: 0%"></div>
+                </div>
+                <div class="category-count"><span id="advancedCount">0</span>/<span id="advancedRequired">80</span></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 必修科目取得状況 -->
+          <div id="requiredCoursesPanel" class="required-courses-panel">
+            <h3 class="status-title">必修科目取得状況</h3>
+            <div class="required-progress-container">
+              <div id="requiredProgress" class="required-progress"></div>
+            </div>
+            <div class="required-count"><span id="requiredCount">0</span>/<span id="requiredTotal">7</span> 科目取得済み</div>
+            
+            <div id="remainingCourses" class="remaining-courses">
+              <h4>残りの必修科目</h4>
+              <ul id="requiredList" class="required-list">
+                <!-- 必修科目リストがJSで追加されます -->
+              </ul>
+            </div>
+          </div>
+          
+          <!-- 推奨履修科目 -->
+          <div id="recommendedCoursesPanel" class="recommended-courses-panel">
+            <h3 class="status-title">推奨履修科目</h3>
+            
+            <div class="course-groups">
+              <div class="course-group">
+                <h4 class="group-title">必修科目（未取得）</h4>
+                <ul id="recommendedRequiredList" class="course-list">
+                  <!-- JSで追加 -->
+                </ul>
+              </div>
+              
+              <div class="course-group">
+                <h4 class="group-title">専門基礎科目（残り4単位）</h4>
+                <ul id="recommendedBasicList" class="course-list">
+                  <!-- JSで追加 -->
+                </ul>
+              </div>
+              
+              <div class="course-group">
+                <h4 class="group-title">専門科目（残り8単位）</h4>
+                <ul id="recommendedAdvancedList" class="course-list">
+                  <!-- JSで追加 -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- ステータスリボン -->
+        <div id="statusRibbon" class="status-ribbon"></div>
       </div>
     </div>
   </section>

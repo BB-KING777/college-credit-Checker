@@ -1,83 +1,1436 @@
-<!DOCTYPE html>
+<div class="stats">
+        <div class="stat-card">
+          <div class="stat-value">開発中</div>
+          <div class="stat-label">初期リリース段階</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">1</div>
+          <div class="stat-label">対応学部数</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">情報理工</div>
+          <div class="stat-label">対応学部</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">募集中</div>
+          <div class="stat-label">授業データ</div>
+        </div>
+      </div><!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>単位チェッカー | College Credit Checker</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>立命館大学単位チェッカー - 公式サイト</title>
+  <style>
+    :root {
+      --primary: #003a70;
+      --secondary: #007bbb;
+      --accent: #ff6600;
+      --light: #f5f9ff;
+      --dark: #333333;
+      --success: #56ab2f;
+      --warning: #ff9900;
+      --danger: #ff5e62;
+    }
+    
+    /* モバイルファーストのアプローチを採用 */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', 'Yu Gothic', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    a {
+      text-decoration: none;
+      color: var(--secondary);
+      transition: color 0.3s ease;
+    }
+    
+    a:hover {
+      color: var(--accent);
+    }
+    
+    /* ヘッダー */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      width: 40px;
+      height: 40px;
+      background-color: white;
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--primary);
+      margin-right: 15px;
+      font-weight: bold;
+    }
+    
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 2rem;
+    }
+    
+    nav ul li a {
+      color: white;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* ヒーローセクション */
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 8rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background-image: radial-gradient(circle, #ffffff 2px, transparent 2px);
+      background-size: 30px 30px;
+    }
+    
+    .hero-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-text {
+      flex: 1;
+      padding-right: 2rem;
+    }
+    
+    .hero-text h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    
+    .hero-text p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .highlight {
+      color: var(--warning);
+      font-weight: 600;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background-color: var(--accent);
+      color: white;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      background-color: #ff7d1a;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 102, 0, 0.4);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid white;
+      box-shadow: none;
+      margin-left: 1rem;
+    }
+    
+    .btn-outline:hover {
+      background-color: white;
+      color: var(--primary);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    }
+    
+    .hero-image {
+      flex: 1;
+      text-align: right;
+    }
+    
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* 特徴セクション */
+    .section {
+      padding: 5rem 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+    
+    .section-title p {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .feature-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .icon-realtime { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+    .icon-required { background: linear-gradient(135deg, #ff9966, #ff5e62); }
+    .icon-simple { background: linear-gradient(135deg, #56ab2f, #a8e063); }
+    .icon-category { background: linear-gradient(135deg, #833ab4, #fd1d1d); }
+    .icon-display { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+    
+    .feature-title {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .feature-text {
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    /* ユーザー体験セクション */
+    .experience {
+      background-color: var(--light);
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .stat-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: 1.2rem;
+      color: #666;
+    }
+    
+    /* ダウンロードセクション */
+    .download {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .download-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background-image: radial-gradient(circle, #ffffff 2px, transparent 2px);
+      background-size: 30px 30px;
+    }
+    
+    .download-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .download-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .download-text {
+      font-size: 1.2rem;
+      margin-bottom: 3rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.9;
+    }
+    
+    .download-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    
+    .download-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 2rem;
+      width: 300px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .download-card:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-10px);
+    }
+    
+    .download-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .download-card-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .download-card-text {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+    
+    /* 使い方セクション */
+    .usage {
+      background-color: white;
+    }
+    
+    .steps {
+      max-width: 800px;
+      margin: 3rem auto 0;
+    }
+    
+    .step {
+      display: flex;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .step:last-child {
+      margin-bottom: 0;
+    }
+    
+    .step-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-right: 2rem;
+      flex-shrink: 0;
+      box-shadow: 0 10px 20px rgba(0, 58, 112, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .step-content {
+      background-color: var(--light);
+      padding: 2rem;
+      border-radius: 15px;
+      flex-grow: 1;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    
+    .step-title {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .step-text {
+      color: #666;
+    }
+    
+    .step-line {
+      position: absolute;
+      top: 60px;
+      left: 30px;
+      width: 2px;
+      height: calc(100% - 30px);
+      background-color: var(--secondary);
+      opacity: 0.3;
+    }
+    
+    /* FAQセクション */
+    .faq {
+      background-color: var(--light);
+    }
+    
+    .accordion {
+      max-width: 800px;
+      margin: 3rem auto 0;
+    }
+    
+    .accordion-item {
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .accordion-header {
+      background-color: white;
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--primary);
+      transition: all 0.3s ease;
+    }
+    
+    .accordion-header:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .accordion-icon {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .accordion-content {
+      background-color: white;
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .accordion-body {
+      padding: 0 0 1.5rem;
+      color: #666;
+    }
+    
+    .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+    
+    .accordion-item.active .accordion-content {
+      max-height: 300px;
+    }
+    
+    /* お問い合わせセクション */
+    .contact {
+      text-align: center;
+    }
+    
+    .contact-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .contact-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      width: 300px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .contact-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .contact-icon {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-type {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .contact-info {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* フッター */
+    footer {
+      background-color: var(--primary);
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    
+    .footer-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    
+    /* レスポンシブデザイン - モバイルファースト */
+    /* スマートフォン（小）基本スタイル */
+    .site-title {
+      font-size: 1.1rem;
+    }
+    
+    .logo {
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    
+    .container {
+      width: 95%;
+      padding: 0 0.5rem;
+    }
+    
+    header {
+      padding: 0.8rem 0;
+    }
+    
+    nav ul {
+      display: none;
+    }
+    
+    .mobile-menu-btn {
+      display: block;
+    }
+    
+    .mobile-menu {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: var(--primary);
+      z-index: 999;
+      padding: 1rem 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-150%);
+      transition: transform 0.3s ease;
+    }
+    
+    .mobile-menu.active {
+      transform: translateY(0);
+    }
+    
+    .mobile-menu ul {
+      list-style: none;
+    }
+    
+    .mobile-menu ul li {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .mobile-menu ul li a {
+      display: block;
+      padding: 1rem 1.5rem;
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .hero {
+      padding: 6rem 0 3rem;
+    }
+    
+    .hero-content {
+      flex-direction: column;
+    }
+    
+    .hero-text {
+      padding-right: 0;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .hero-text h1 {
+      font-size: 1.8rem;
+    }
+    
+    .hero-text p {
+      font-size: 1rem;
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .btn-outline {
+      margin-left: 0;
+    }
+    
+    .section {
+      padding: 3rem 0;
+    }
+    
+    .section-title h2 {
+      font-size: 1.8rem;
+    }
+    
+    .section-title p {
+      font-size: 1rem;
+    }
+    
+    .features {
+      grid-template-columns: 1fr;
+    }
+    
+    .feature-card {
+      padding: 1.5rem;
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+    }
+    
+    .feature-title {
+      font-size: 1.3rem;
+    }
+    
+    .stats {
+      grid-template-columns: 1fr;
+    }
+    
+    .download-options {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .download-card {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .steps {
+      margin-top: 2rem;
+    }
+    
+    .step {
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+    
+    .step-number {
+      margin-right: 0;
+      margin-bottom: 1rem;
+    }
+    
+    .step-line {
+      display: none;
+    }
+    
+    .step-content {
+      padding: 1.5rem;
+    }
+    
+    .accordion-header {
+      padding: 1.2rem;
+      font-size: 1rem;
+    }
+    
+    .accordion-body {
+      padding: 0 0 1.2rem;
+      font-size: 0.95rem;
+    }
+    
+    .contact-options {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .contact-card {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .footer-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    /* タブレット向け */
+    @media (min-width: 576px) {
+      .site-title {
+        font-size: 1.2rem;
+      }
+      
+      .logo {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+      }
+      
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-text p {
+        font-size: 1.1rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2rem;
+      }
+      
+      .features {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .download-options {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+    
+    /* ノートPC向け */
+    @media (min-width: 768px) {
+      .container {
+        width: 90%;
+      }
+      
+      nav ul {
+        display: flex;
+      }
+      
+      .mobile-menu-btn {
+        display: none;
+      }
+      
+      .hero-text h1 {
+        font-size: 2.5rem;
+      }
+      
+      .btn {
+        display: inline-block;
+        width: auto;
+      }
+      
+      .btn-outline {
+        margin-left: 1rem;
+      }
+      
+      .step {
+        flex-direction: row;
+      }
+      
+      .step-number {
+        margin-right: 2rem;
+        margin-bottom: 0;
+      }
+      
+      .step-line {
+        display: block;
+      }
+      
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    /* デスクトップ向け */
+    @media (min-width: 992px) {
+      .hero-content {
+        flex-direction: row;
+      }
+      
+      .hero-text {
+        padding-right: 2rem;
+        margin-bottom: 0;
+        text-align: left;
+      }
+      
+      .hero-text h1 {
+        font-size: 3rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2.5rem;
+      }
+      
+      .stats {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .footer-container {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    /* 大画面向け */
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 1200px;
+      }
+      
+      .hero-text h1 {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><i class="fas fa-graduation-cap"></i> 単位チェッカー</h1>
-            <p>あなたの履修状況を簡単に確認</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="app-description">
-            <h2>単位チェッカーとは？</h2>
-            <p>このアプリケーションは、大学生が自分の取得単位を簡単に管理・確認できるツールです。卒業に必要な単位数や履修状況を視覚的に把握することができます。</p>
+  <header>
+    <div class="container header-container">
+      <div class="logo-container">
+        <div class="logo">単</div>
+        <div class="site-title">立命館大学単位チェッカー</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#features">特徴</a></li>
+          <li><a href="#usage">使い方</a></li>
+          <li><a href="#download">ダウンロード</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">≡</button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#features">特徴</a></li>
+        <li><a href="#usage">使い方</a></li>
+        <li><a href="#download">ダウンロード</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <div class="hero-pattern"></div>
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1>卒業に必要な単位を<br>かんたんチェック</h1>
+        <p>立命館大学の学生のために開発された <span class="highlight">Chrome拡張機能</span> で、<br>卒業要件の充足状況をワンクリックで確認できます。</p>
+        <a href="#download" class="btn">GitHubからダウンロード</a>
+        <a href="#usage" class="btn btn-outline">使い方を見る</a>
+      </div>
+      <div class="hero-image">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="300" height="300">
+          <!-- 背景の正方形 -->
+          <rect x="5" y="5" width="90" height="90" fill="white" stroke="#003a70" stroke-width="5" rx="8" ry="8"/>
+          
+          <!-- 「単」の文字 -->
+          <g fill="#003a70">
+            <!-- 上部の横線 -->
+            <rect x="20" y="20" width="60" height="8" rx="2" ry="2"/>
             
-            <div class="features">
-                <div class="feature-card">
-                    <i class="fas fa-check-circle"></i>
-                    <h3>単位の確認</h3>
-                    <p>取得した単位を科目区分ごとに確認できます</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-chart-pie"></i>
-                    <h3>視覚的な表示</h3>
-                    <p>グラフで履修状況を一目で把握</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-calculator"></i>
-                    <h3>卒業シミュレーション</h3>
-                    <p>卒業までに必要な残りの単位数を計算</p>
-                </div>
+            <!-- 縦線 -->
+            <rect x="46" y="20" width="8" height="60" rx="2" ry="2"/>
+            
+            <!-- 中央の横線 -->
+            <rect x="20" y="46" width="60" height="8" rx="2" ry="2"/>
+            
+            <!-- 左下の部分 -->
+            <path d="M20,54 L20,72 Q20,74 22,74 L38,74 Q40,74 40,72 L40,54 L32,54 L32,66 L28,66 L28,54 Z"/>
+            
+            <!-- 右下の部分 -->
+            <path d="M60,54 L60,72 Q60,74 62,74 L78,74 Q80,74 80,72 L80,54 L72,54 L72,66 L68,66 L68,54 Z"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+  
+  <section id="faq" class="section faq">
+    <div class="container">
+      <div class="section-title">
+        <h2>よくある質問</h2>
+        <p>立命館大学単位チェッカーについてよく寄せられる質問と回答です。</p>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            単位チェッカーは無料で使えますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              はい、完全に無料でご利用いただけます。インストール料金や月額料金などは一切かかりません。
             </div>
-        </section>
-        
-        <section class="app-demo">
-            <h2>アプリを試す</h2>
-            <div class="demo-container">
-                <div class="demo-actions">
-                    <button id="demo-button" class="primary-button">デモを開始</button>
-                    <a href="app.html" class="secondary-button">アプリを起動</a>
-                </div>
-                <div id="demo-area" class="demo-placeholder">
-                    <!-- ここにデモが表示されます -->
-                    <p>デモボタンをクリックするとアプリのデモが表示されます</p>
-                </div>
-            </div>
-        </section>
-        
-        <section class="how-to-use">
-            <h2>使い方</h2>
-            <ol>
-                <li>「アプリを起動」ボタンをクリックしてアプリを開きます</li>
-                <li>科目区分と取得単位数を入力します</li>
-                <li>「計算」ボタンをクリックして結果を確認します</li>
-                <li>必要に応じてデータを保存・共有できます</li>
-            </ol>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 College Credit Checker</p>
-            <div class="footer-links">
-                <a href="https://github.com/BB-KING777/college-credit-Checker" target="_blank">
-                    <i class="fab fa-github"></i> GitHub リポジトリ
-                </a>
-                <a href="#" id="contact-link">
-                    <i class="fas fa-envelope"></i> お問い合わせ
-                </a>
-            </div>
+          </div>
         </div>
-    </footer>
-
-    <script src="js/main.js"></script>
-</body>
-</html>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            どの学部・学科に対応していますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              現在は情報理工学部のみに対応しています。今後、他の学部へも対応を広げていく予定です。そのためにも、各学部の卒業要件データや授業データの提供にご協力いただけると幸いです。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            個人情報やパスワードは安全ですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              当拡張機能はユーザーのログイン情報や個人情報を収集・保存することはありません。表示されている科目データのみを解析し、すべての処理はユーザーのブラウザ内で完結します。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            分析結果は正確ですか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              高い精度で分析を行っていますが、カリキュラム改正や特殊なケースによって完全に正確でない場合があります。最終的な卒業判定は大学の公式情報を確認してください。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            Chromeウェブストアでインストールできますか？
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              現在はChromeウェブストアでの公開はしていません。GitHubリポジトリからダウンロードして手動でインストールする必要があります。インストール方法はGitHubのREADMEに記載されています。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact" class="section contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>お問い合わせ</h2>
+        <p>ご質問やフィードバック、機能リクエストなどお気軽にお寄せください。</p>
+      </div>
+      
+      <div class="contact-options">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i>🐙</i>
+          </div>
+          <h3 class="contact-type">GitHub Issues</h3>
+          <p class="contact-info">バグ報告や機能リクエスト、学部データの提供などはGitHubのIssuesからどうぞ。</p>
+          <a href="https://github.com/BB-KING777/college-credit-Checker/issues" class="btn">Issues を開く</a>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i>𝕏</i>
+          </div>
+          <h3 class="contact-type">Twitter DM</h3>
+          <p class="contact-info">質問や提案などはTwitterのDMからも受け付けています。</p>
+          <a href="https://twitter.com/denkiryokingg" class="btn">@denkiryokinggg</a>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i>📷</i>
+          </div>
+          <h3 class="contact-type">Instagram DM</h3>
+          <p class="contact-info">InstagramのDMからもお問い合わせいただけます。</p>
+          <a href="#" class="btn" id="instagram-link">DMを送る</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>単位チェッカー</h3>
+          <p>立命館大学の学生のための無料Chrome拡張機能。<br>卒業要件充足状況を簡単にチェック。</p>
+          <div class="social-links">
+            <a href="https://twitter.com/denkiryokingg" class="social-link">𝕏</a>
+            <a href="#" class="social-link" id="footer-instagram-link">📷</a>
+            <a href="https://github.com/BB-KING777/college-credit-Checker" class="social-link">🐙</a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>リンク</h3>
+          <ul class="footer-links">
+            <li><a href="#features">特徴</a></li>
+            <li><a href="#usage">使い方</a></li>
+            <li><a href="#download">ダウンロード</a></li>
+            <li><a href="#faq">よくある質問</a></li>
+            <li><a href="#contact">お問い合わせ</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>協力のお願い</h3>
+          <ul class="footer-links">
+            <li><a href="#">卒業要件データの提供</a></li>
+            <li><a href="#">授業データの提供</a></li>
+            <li><a href="#">テスト協力</a></li>
+            <li><a href="#">バグ報告</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>関連情報</h3>
+          <ul class="footer-links">
+            <li><a href="#">プライバシーポリシー</a></li>
+            <li><a href="#">ライセンス情報</a></li>
+            <li><a href="#">GitHub リポジトリ</a></li>
+            <li><a href="#">開発状況</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2025 立命館大学単位チェッカー. 本サービスは立命館大学公式のものではありません。
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // モバイルメニューの処理
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      
+      mobileMenuBtn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('active');
+        mobileMenuBtn.textContent = mobileMenu.classList.contains('active') ? '✕' : '≡';
+      });
+      
+      // メニューリンククリック時にメニューを閉じる
+      const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+      mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          mobileMenuBtn.textContent = '≡';
+        });
+      });
+      
+      // アコーディオンの処理
+      const accordionItems = document.querySelectorAll('.accordion-item');
+      accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        
+        header.addEventListener('click', function() {
+          item.classList.toggle('active');
+          
+          // 他のアコーディオンを閉じる
+          accordionItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+            }
+          });
+        });
+      });
+      
+      // Instagram IDが後で追加できるようにプレースホルダーを設定
+      const instagramLink = document.getElementById('instagram-link');
+      const footerInstagramLink = document.getElementById('footer-instagram-link');
+      
+      instagramLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Instagram IDは準備中です。Twitter (@denkiryokingg) またはGitHub Issuesからお問い合わせください。');
+      });
+      
+      footerInstagramLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Instagram IDは準備中です。Twitter (@denkiryokingg) またはGitHub Issuesからお問い合わせください。');
+      });
+    });
+  </script>
+  
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>主な機能</h2>
+        <p>立命館大学単位チェッカーは、学生生活をサポートする便利な機能が満載です。</p>
+      </div>
+      
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon icon-realtime">⏱</div>
+          <h3 class="feature-title">リアルタイムチェック</h3>
+          <p class="feature-text">CAMPUS WEBの科目一覧画面から直接データを取得し、最新の単位状況をリアルタイムで確認できます。</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon icon-required">✓</div>
+          <h3 class="feature-title">必修科目管理</h3>
+          <p class="feature-text">未修得の必修科目をリストアップし、卒業までに必要な科目を一目で確認できます。取得漏れを防止します。</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon icon-simple">👆</div>
+          <h3 class="feature-title">簡単操作</h3>
+          <p class="feature-text">ボタンをクリックするだけで単位充足状況をチェック。複雑な設定や操作は必要ありません。</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon icon-category">📊</div>
+          <h3 class="feature-title">区分別チェック</h3>
+          <p class="feature-text">外国語、教養、専門科目など、区分ごとの単位取得状況をグラフィカルに表示します。</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon icon-display">🔍</div>
+          <h3 class="feature-title">残り科目表示</h3>
+          <p class="feature-text">卒業までに必要な残りの単位数や科目を明確に表示。効率的な履修計画を立てられます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section experience">
+    <div class="container">
+      <div class="section-title">
+        <h2>協力のお願い</h2>
+        <p>各学部の卒業要件や授業データの提供にご協力ください。</p>
+      </div>
+      
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-value">開発中</div>
+          <div class="stat-label">初期リリース段階</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">1</div>
+          <div class="stat-label">対応学部数</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">情報理工</div>
+          <div class="stat-label">対応学部</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-value">簡単</div>
+          <div class="stat-label">利用の手軽さ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="download" class="section download">
+    <div class="download-pattern"></div>
+    <div class="container download-content">
+      <h2 class="download-title">今すぐダウンロード</h2>
+      <p class="download-text">立命館大学単位チェッカーは完全無料でご利用いただけます。<br>GitHubからダウンロードして手動でインストールできます。</p>
+      
+      <div class="download-options">
+        <div class="download-card">
+          <div class="download-icon">
+            <i>G</i>
+          </div>
+          <h3 class="download-card-title">GitHubから</h3>
+          <p class="download-card-text">リポジトリをクローンまたはZIPでダウンロードして手動でインストールしてください。</p>
+          <a href="https://github.com/BB-KING777/college-credit-Checker" class="btn">GitHubを見る</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="usage" class="section usage">
+    <div class="container">
+      <div class="section-title">
+        <h2>使い方</h2>
+        <p>立命館大学単位チェッカーは非常にシンプルで使いやすいツールです。</p>
+      </div>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3 class="step-title">拡張機能をインストール</h3>
+            <p class="step-text">ChromeウェブストアまたはGitHubから単位チェッカーをインストールします。ブラウザの右上に拡張機能のアイコンが表示されます。</p>
+          </div>
+          <div class="step-line"></div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3 class="step-title">CAMPUS WEBにログイン</h3>
+            <p class="step-text">立命館大学のCAMPUS WEBにログインして、「履修状況確認（受講登録内容・成績一覧）」から「科目一覧」タブを開きます。</p>
+          </div>
+          <div class="step-line"></div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3 class="step-title">単位チェック実行</h3>
+            <p class="step-text">画面右下に表示される「単位チェック」ボタンをクリックするか、拡張機能のアイコンをクリックして分析を実行します。</p>
+          </div>
+          <div class="step-line"></div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3 class="step-title">結果を確認</h3>
+            <p class="step-text">区分別の単位取得状況や必修科目の履修状況、卒業要件の充足状況などを確認できます。足りない単位や科目を把握して履修計画に役立てましょう。</p>
+          </div>
+        </div>

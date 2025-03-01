@@ -2356,3 +2356,32 @@ nav ul {
   transform: none;
   box-shadow: none;
 }
+
+// フォームステータス用のCSS
+// styles.cssに追加する
+/*
+.form-status {
+  margin: 1rem 0;
+}
+
+.success-message {
+  color: var(--success);
+  background-color: rgba(86, 171, 47, 0.1);
+  border-left: 3px solid var(--success);
+  padding: 0.8rem 1rem;
+}
+
+.error-message {
+  color: var(--danger);
+  background-color: rgba(255, 94, 98, 0.1);
+  border-left: 3px solid var(--danger);
+  padding: 0.8rem 1rem;
+}
+
+.info-message {
+  color: var(--secondary);
+  background-color: rgba(0, 123, 187, 0.1);
+  border-left: 3px solid var(--secondary);
+  padding: 0.8rem 1rem;
+}
+*/

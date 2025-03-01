@@ -84,63 +84,84 @@
     </div>
   </section>
   
-  <!--<section class="section contact-form-section">
-    <div class="container">
-      <div class="section-title">
-        <h2>お問い合わせフォーム</h2>
-        <p>以下のフォームからメッセージを送信できます</p>
-      </div>
-      
-      <div class="contact-form-container">
-        <form id="contactForm" class="contact-form">
-          <div class="form-group">
-            <label for="name">お名前 <span class="required">*</span></label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="email">メールアドレス <span class="required">*</span></label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="subject">件名 <span class="required">*</span></label>
-            <input type="text" id="subject" name="subject" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="category">カテゴリ</label>
-            <select id="category" name="category">
-              <option value="question">質問</option>
-              <option value="feedback">フィードバック</option>
-              <option value="bug">バグ報告</option>
-              <option value="feature">機能リクエスト</option>
-              <option value="data">データ提供</option>
-              <option value="other">その他</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="message">メッセージ <span class="required">*</span></label>
-            <textarea id="message" name="message" rows="6" required></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label class="checkbox-container">
-              <input type="checkbox" id="dataConsent" name="dataConsent" required>
-              <span class="checkmark"></span>
-              個人情報の取り扱いに同意します
-            </label>
-          </div>
-          
-          <div class="form-actions">
-            <button type="submit" class="btn submit-btn">送信する</button>
-            <button type="reset" class="btn btn-outline reset-btn">リセット</button>
-          </div>
-        </form>
-      </div>
+  <!-- contact.html のフォームセクション -->
+<section class="section contact-form-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>お問い合わせフォーム</h2>
+      <p>以下のフォームからメッセージを送信できます</p>
     </div>
-  </section>-->
+    
+    <div class="contact-form-container">
+      <form id="contactForm" class="contact-form">
+        <div class="form-group">
+          <label for="username">ユーザー名（ニックネーム） <span class="required">*</span></label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="faculty">学部 <span class="required">*</span></label>
+          <select id="faculty" name="faculty" required>
+            <option value="">選択してください</option>
+            <optgroup label="衣笠キャンパス">
+              <option value="法学部">法学部</option>
+              <option value="産業社会学部">産業社会学部</option>
+              <option value="国際関係学部">国際関係学部</option>
+              <option value="文学部">文学部</option>
+            </optgroup>
+            <optgroup label="大阪いばらきキャンパス">
+              <option value="経営学部">経営学部</option>
+              <option value="政策科学部">政策科学部</option>
+              <option value="総合心理学部">総合心理学部</option>
+              <option value="グローバル教養学部">グローバル教養学部</option>
+              <option value="映像学部">映像学部</option>
+              <option value="情報理工学部">情報理工学部</option>
+            </optgroup>
+            <optgroup label="びわこ・くさつキャンパス">
+              <option value="経済学部">経済学部</option>
+              <option value="スポーツ健康科学部">スポーツ健康科学部</option>
+              <option value="食マネジメント学部">食マネジメント学部</option>
+              <option value="理工学部">理工学部</option>
+              <option value="生命科学部">生命科学部</option>
+              <option value="薬学部">薬学部</option>
+            </optgroup>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="subject">件名 <span class="required">*</span></label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="category">カテゴリ</label>
+          <select id="category" name="category">
+            <option value="question">質問</option>
+            <option value="feedback">フィードバック</option>
+            <option value="bug">バグ報告</option>
+            <option value="feature">機能リクエスト</option>
+            <option value="data">データ提供</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">メッセージ <span class="required">*</span></label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        
+        <div id="formStatus" class="form-status"></div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn submit-btn">送信する</button>
+          <button type="reset" class="btn btn-outline reset-btn">リセット</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+          
   
   <section class="section data-contribution-section">
     <div class="container">

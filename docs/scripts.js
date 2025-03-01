@@ -447,3 +447,105 @@ document.addEventListener('DOMContentLoaded', function() {
     updateStatus("分析中...");
   }
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contactForm');
+  const formStatus = document.getElementById('formStatus');
+  
+  if (contactForm) {
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzRN5aGFETWUiNC2K0_ECPY7URG4kpmcurvIz_RY_5AGaCghKLzaNRuBRbQQNl7FJcy/exec-+';
+    
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // 送信ボタンを無効化して連打防止
+      const submitBtn = contactForm.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '送信中...';
+      
+      // フォームデータの取得
+      const formData = new FormData(contactForm);
+      
+      // データのバリデーション
+      let isValid = true;
+      const requiredFields = ['username', 'faculty', 'subject', 'message'];
+      
+      requiredFields.forEach(field => {
+        const input = document.getElementById(field);
+        if (!formData.get(field) || formData.get(field).trim() === '') {
+          isValid = false;
+          input.style.borderColor = 'var(--danger)';
+        } else {
+          input.style.borderColor = '#eee';
+        }
+      });
+      
+      if (!isValid) {
+        formStatus.innerHTML = '<p class="error-message">必須項目を入力してください。</p>';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '送信する';
+        return;
+      }
+      
+      // 送信中のステータス表示
+      formStatus.innerHTML = '<p class="info-message">送信中です。しばらくお待ちください...</p>';
+      
+      // Google Apps Scriptにフォームデータを送信
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors', // Google Apps Scriptは異なるオリジンからのリクエストを受け付けるため
+        body: formData
+      })
+      .then(response => {
+        // 送信成功表示
+        formStatus.innerHTML = '<p class="success-message">お問い合わせありがとうございます。内容を確認いたします。</p>';
+        contactForm.reset();
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '送信する';
+        
+        // 5秒後にステータスメッセージを消す
+        setTimeout(() => {
+          formStatus.innerHTML = '';
+        }, 5000);
+      })
+      .catch(error => {
+        // エラー表示
+        formStatus.innerHTML = `<p class="error-message">送信中にエラーが発生しました。時間をおいて再度お試しください。</p>`;
+        console.error('Error:', error);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '送信する';
+      });
+    });
+  }
+});
+
+// フォームステータス用のCSS
+// styles.cssに追加する
+/*
+.form-status {
+  margin: 1rem 0;
+}
+
+.success-message {
+  color: var(--success);
+  background-color: rgba(86, 171, 47, 0.1);
+  border-left: 3px solid var(--success);
+  padding: 0.8rem 1rem;
+}
+
+.error-message {
+  color: var(--danger);
+  background-color: rgba(255, 94, 98, 0.1);
+  border-left: 3px solid var(--danger);
+  padding: 0.8rem 1rem;
+}
+
+.info-message {
+  color: var(--secondary);
+  background-color: rgba(0, 123, 187, 0.1);
+  border-left: 3px solid var(--secondary);
+  padding: 0.8rem 1rem;
+}
+*/

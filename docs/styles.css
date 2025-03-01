@@ -2288,3 +2288,71 @@ nav ul {
     margin-right: auto;
   }
 }
+
+/* お問い合わせフォーム用の追加スタイル - styles.css に追加 */
+
+/* フォームステータスメッセージ */
+.form-status {
+  margin: 1rem 0;
+}
+
+.success-message {
+  color: var(--success);
+  background-color: rgba(86, 171, 47, 0.1);
+  border-left: 3px solid var(--success);
+  padding: 0.8rem 1rem;
+}
+
+.error-message {
+  color: var(--danger);
+  background-color: rgba(255, 94, 98, 0.1);
+  border-left: 3px solid var(--danger);
+  padding: 0.8rem 1rem;
+}
+
+.info-message {
+  color: var(--secondary);
+  background-color: rgba(0, 123, 187, 0.1);
+  border-left: 3px solid var(--secondary);
+  padding: 0.8rem 1rem;
+}
+
+/* 学部選択のスタイル */
+#faculty {
+  background-color: white;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+  font-size: 1rem;
+  color: var(--dark);
+  transition: all 0.3s ease;
+}
+
+#faculty:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 5px 15px rgba(0, 123, 187, 0.1);
+}
+
+#faculty optgroup {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+#faculty option {
+  padding: 0.5rem;
+  color: var(--dark);
+}
+
+/* フォーム無効化時のスタイル */
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.submit-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}

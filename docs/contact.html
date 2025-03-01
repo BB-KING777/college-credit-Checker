@@ -84,8 +84,7 @@
     </div>
   </section>
   
-  <!-- contact.html のフォームセクション -->
-<section class="section contact-form-section">
+ <section class="section contact-form-section">
   <div class="container">
     <div class="section-title">
       <h2>お問い合わせフォーム</h2>
@@ -93,7 +92,13 @@
     </div>
     
     <div class="contact-form-container">
-      <form id="contactForm" class="contact-form">
+      <form id="contactForm" class="contact-form" action="https://formsubmit.co/c001d7987b35fcebd35576ba39e6ff3e" method="POST">
+        <!-- hidden fields for FormSubmit configuration -->
+        <input type="hidden" name="_subject" value="立命館大学単位チェッカーへのお問い合わせ">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_next" value="https://あなたのドメイン/thanks.html">
+        
         <div class="form-group">
           <label for="username">ユーザー名（ニックネーム） <span class="required">*</span></label>
           <input type="text" id="username" name="username" required>
@@ -151,8 +156,6 @@
           <textarea id="message" name="message" rows="6" required></textarea>
         </div>
         
-        <div id="formStatus" class="form-status"></div>
-        
         <div class="form-actions">
           <button type="submit" class="btn submit-btn">送信する</button>
           <button type="reset" class="btn btn-outline reset-btn">リセット</button>
@@ -161,6 +164,17 @@
     </div>
   </div>
 </section>
+
+<!-- サンクスページを作成したくない場合は、以下のJavaScriptで代用可能 -->
+<script>
+  // 送信後にメッセージを表示するための簡易スクリプト
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('submitted') === 'true') {
+    alert('お問い合わせありがとうございます。内容を確認いたします。');
+    // クエリパラメータを削除して再読み込み
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+</script>
           
   
   <section class="section data-contribution-section">

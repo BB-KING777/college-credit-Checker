@@ -21,6 +21,44 @@
           ]
         }
       ]
+    },
+    {
+      "id": "life",
+      "name": "生命科学部",
+      "departments": [
+        {
+          "id": "applied_chem",
+          "name": "応用化学科",
+          "hasCourses": true,
+          "requirementsFile": "LifeAppliedChemRequirements.json",
+          "courseCategoriesFile": "LifeAppliedChemCategories.json",
+          "courses": []
+        },
+        {
+          "id": "biotech",
+          "name": "生物工学科",
+          "hasCourses": true,
+          "requirementsFile": "LifeBiotechRequirements.json",
+          "courseCategoriesFile": "LifeBiotechCategories.json",
+          "courses": []
+        },
+        {
+          "id": "bioinfo",
+          "name": "生命情報学科",
+          "hasCourses": true,
+          "requirementsFile": "LifeBioinfoRequirements.json",
+          "courseCategoriesFile": "LifeBioinfoCategories.json",
+          "courses": []
+        },
+        {
+          "id": "biomed",
+          "name": "生命医科学科",
+          "hasCourses": true,
+          "requirementsFile": "LifeBiomedRequirements.json",
+          "courseCategoriesFile": "LifeBiomedCategories.json",
+          "courses": []
+        }
+      ]
     }
   ]
 }

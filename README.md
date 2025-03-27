@@ -16,6 +16,9 @@ For only Ritsumeikan Student
 
 なお、拡張性に関して、/data/内のjsonを編集することにより柔軟にカリキュラム等が改造可能になっています。
 
+> [!note]
+> [Wiki](https://github.com/BB-KING777/college-credit-Checker/wiki/%E7%AB%8B%E5%91%BD%E9%A4%A8%E5%A4%A7%E5%AD%A6%E5%8D%98%E4%BD%8D%E3%83%81%E3%82%A7%E3%83%83%E3%82%AB%E3%83%BC%E3%81%AE%E5%AD%A6%E9%83%A8%E5%AF%BE%E5%BF%9CJSON%E7%B7%A8%E9%9B%86%E3%82%AC%E3%82%A4%E3%83%89)から編集方法等が確認できます。
+
 
 
 # 立命館大学単位チェッカー 高度法的プライバシーポリシーおよび責任制限規定

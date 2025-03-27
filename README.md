@@ -2,7 +2,7 @@
 For only Ritsumeikan Student
 
 > [!WARNING]
-> First Branch, Now It's only optimize for 情報理工学部
+> First Branch, Now It's only optimize for 情報理工学部　and 生命科学部
 > 
 > ※現在は情報理工学部の履修のみ対応です。あなたの学部に対応させたい場合は私に、該当学部の授業一覧と卒業要件がわかるデータを送信してください。
 > 

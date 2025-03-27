@@ -1,5 +1,5 @@
 {
-  "manifest_version": 4,
+  "manifest_version": 3,
   "name": "立命館大学 単位チェッカー",
   "version": "1.4",
   "description": "立命館大学の学生向け単位充足状況チェックツール",

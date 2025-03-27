@@ -293,11 +293,10 @@ function displayCreditSummary(data) {
     `;
   }
   
-  // 専門科目
+  // 専門科目（基礎専門、共通専門、固有専門のみを含む）
   const specializedTotal = (credits.specializedBasic || 0) + 
                           (credits.specializedCommon || 0) + 
-                          (credits.specializedCore || 0) + 
-                          (credits.careerGlobal || 0);
+                          (credits.specializedCore || 0);
   
   html += `
       <div class="summary-row">
@@ -307,6 +306,18 @@ function displayCreditSummary(data) {
     </div>
   </div>
   `;
+  
+  // キャリア・グローバル科目（専門科目とは別に表示）
+  if (requirements.careerGlobal) {
+    html += `
+    <div class="summary-box">
+      <div class="summary-row">
+        <span class="summary-label">キャリア・グローバル科目:</span>
+        <span class="summary-value">${credits.careerGlobal} / ${requirements.careerGlobal}</span>
+      </div>
+    </div>
+    `;
+  }
   
   // 必修科目情報
   if (credits.requiredCourses && credits.requiredCourses.remaining) {
@@ -371,7 +382,21 @@ function displayCreditSummary(data) {
       `;
     }
     
-    // 専門科目
+    // 共通専門科目
+    if (recommendedCourses.specializedCommon && recommendedCourses.specializedCommon.length > 0 && graduationCheck.missing.specializedCommon > 0) {
+      hasRecommendations = true;
+      html += `
+        <div class="recommendation-category">
+          <h4>共通専門科目 (残り${graduationCheck.missing.specializedCommon}単位)</h4>
+          <ul>
+            ${recommendedCourses.specializedCommon.slice(0, 3).map(course => `<li>${course}</li>`).join('')}
+            ${recommendedCourses.specializedCommon.length > 3 ? `<li>...他 ${recommendedCourses.specializedCommon.length - 3} 件</li>` : ''}
+          </ul>
+        </div>
+      `;
+    }
+    
+    // 固有専門科目
     if (recommendedCourses.specializedCore && recommendedCourses.specializedCore.length > 0 && graduationCheck.missing.specializedCore > 0) {
       hasRecommendations = true;
       html += `
@@ -380,6 +405,20 @@ function displayCreditSummary(data) {
           <ul>
             ${recommendedCourses.specializedCore.slice(0, 3).map(course => `<li>${course}</li>`).join('')}
             ${recommendedCourses.specializedCore.length > 3 ? `<li>...他 ${recommendedCourses.specializedCore.length - 3} 件</li>` : ''}
+          </ul>
+        </div>
+      `;
+    }
+    
+    // キャリア・グローバル科目
+    if (recommendedCourses.careerGlobal && recommendedCourses.careerGlobal.length > 0 && graduationCheck.missing.careerGlobal > 0) {
+      hasRecommendations = true;
+      html += `
+        <div class="recommendation-category">
+          <h4>キャリア・グローバル科目 (残り${graduationCheck.missing.careerGlobal}単位)</h4>
+          <ul>
+            ${recommendedCourses.careerGlobal.slice(0, 3).map(course => `<li>${course}</li>`).join('')}
+            ${recommendedCourses.careerGlobal.length > 3 ? `<li>...他 ${recommendedCourses.careerGlobal.length - 3} 件</li>` : ''}
           </ul>
         </div>
       `;

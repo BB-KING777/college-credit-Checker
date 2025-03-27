@@ -22,6 +22,14 @@ async function loadJsonFile(filename) {
 chrome.runtime.onInstalled.addListener(async (details) => {
   console.log('単位チェッカーがインストールされました:', details.reason);
   
+  // 初回インストール時のみウェルカムページを開く
+  if (details.reason === 'install') {
+    // Welcome.htmlを開く
+    chrome.tabs.create({
+      url: chrome.runtime.getURL('welcom.html')
+    });
+  }
+  
   try {
     // 大学データを読み込む
     const ritsumeiAll = await loadJsonFile('RitsumeiAll.json');
@@ -68,7 +76,8 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       selectedCourse: defaultCourse,
       autoAnalysis: true,
       lastCheckedDate: null,
-      creditData: null
+      creditData: null,
+      isFirstRun: details.reason === 'install' // 初回起動フラグを追加
     }, () => {
       if (chrome.runtime.lastError) {
         console.error('設定の保存中にエラーが発生しました:', chrome.runtime.lastError);

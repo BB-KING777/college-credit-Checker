@@ -1,28 +1,271 @@
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
- <head>
-  <title>他の場所からでも分かるタイトル</title>
- </head>
- <body>
-
-  <p><img src="welcome.gif" alt="いらっしゃいませ" /></p>
-
-  <h1>文書の主見出し</h1>
-
-  <p>意味のまとまりのある段落を書こう</p>
-
-  <ul>
-   <li>内容をリストとして</li>
-   <li>列挙してもよい</li>
-   <li><a href="http://www.kanzaki.com/">役立つ情報</a>にリンクもできる</li>
-  </ul>
-
-  <hr />
-  <footer>
-   <address>
-    何某作;  
-    <a href="mailto:yourmail@domain.com">作者へのメッセージ</a>
-   </address>
-   20YY-MM-DD更新
-  </footer>
- </body>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>立命館大学 単位チェッカーへようこそ</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    h1 {
+      color: #006699;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    
+    .logo {
+      width: 80px;
+      height: auto;
+      margin-bottom: 15px;
+    }
+    
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+    
+    h2 {
+      color: #006699;
+      font-size: 22px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #006699;
+      padding-bottom: 8px;
+    }
+    
+    p {
+      margin-bottom: 15px;
+    }
+    
+    .features {
+      margin: 20px 0;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .feature-icon {
+      background-color: #e1f5fe;
+      color: #006699;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .feature-content {
+      flex-grow: 1;
+    }
+    
+    .feature-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    
+    .steps {
+      counter-reset: step-counter;
+      margin: 20px 0;
+    }
+    
+    .step {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 20px;
+    }
+    
+    .step:before {
+      content: counter(step-counter);
+      counter-increment: step-counter;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: #006699;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .step-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    
+    .note {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffca28;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: #006699;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+    
+    .btn:hover {
+      background-color: #004e77;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="icons/icon128.png" alt="単位チェッカーアイコン" class="logo">
+      <h1>立命館大学 単位チェッカーへようこそ</h1>
+      <p>あなたの単位取得状況を簡単に確認できるツールです</p>
+    </header>
+    
+    <div class="card">
+      <h2>このツールについて</h2>
+      <p>立命館大学 単位チェッカーは、CAMPUS WEBの科目一覧から自動的に単位取得状況を分析し、卒業要件の充足状況をわかりやすく表示するChrome拡張機能です。</p>
+      
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">✓</div>
+          <div class="feature-content">
+            <div class="feature-title">単位充足状況の可視化</div>
+            <p>区分ごとの単位取得状況や卒業要件充足状況をグラフと数値で確認できます。</p>
+          </div>
+        </div>
+        
+        <div class="feature">
+          <div class="feature-icon">✓</div>
+          <div class="feature-content">
+            <div class="feature-title">必修科目チェック</div>
+            <p>必修科目の履修状況を確認し、未履修の科目をリストアップします。</p>
+          </div>
+        </div>
+        
+        <div class="feature">
+          <div class="feature-icon">✓</div>
+          <div class="feature-content">
+            <div class="feature-title">推奨科目の提案</div>
+            <p>卒業要件を満たすために履修すべき科目を自動的に提案します。</p>
+          </div>
+        </div>
+        
+        <div class="feature">
+          <div class="feature-icon">✓</div>
+          <div class="feature-content">
+            <div class="feature-title">F評価科目の確認</div>
+            <p>F評価を受けた科目を一覧表示し、再履修計画に役立てられます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>使い方</h2>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-title">CAMPUS WEBにログイン</div>
+          <p>立命館大学のCAMPUS WEBにログインします。</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-title">履修状況確認ページへアクセス</div>
+          <p>「履修状況確認（受講登録内容・成績一覧）」ページを開きます。</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-title">科目一覧タブを開く</div>
+          <p>ページ内の「科目一覧」タブをクリックして科目一覧を表示します。</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-title">学部・学科を選択</div>
+          <p>拡張機能のポップアップで、あなたの学部・学科を選択します。</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-title">単位チェック実行</div>
+          <p>「キャンパスweb」にアクセス</p>
+        　<p>履修状況確認を選択</p>
+          <p>科目一覧をクリック</p>
+          <p>右下の「単位チェック実行」ボタンをクリックすると、単位取得状況が表示されます。</p>
+        </div>
+      </div>
+      
+      <div class="note">
+        <p><strong>注意:</strong> このツールは参考用です。正確な履修・卒業要件については必ず大学の公式情報を確認してください。</p>
+      </div>
+    </div>
+    
+    
+    
+    <footer>
+      <p>立命館大学 単位チェッカー v1.3</p>
+      <p>&copy; 2023-2024 立命館大学単位チェッカー開発チーム</p>
+    </footer>
+  </div>
+  
+  <script>
+    // ポップアップを直接開くリンクがクリックされたとき
+    document.querySelector('.btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      // 拡張機能のポップアップは直接開けないので、代わりにバッジをクリックするよう案内
+      alert('拡張機能のアイコンをクリックしてポップアップを開いてください。\n\nCAMPUS WEBの「科目一覧」ページで使用できます。');
+    });
+  </script>
+</body>
 </html>

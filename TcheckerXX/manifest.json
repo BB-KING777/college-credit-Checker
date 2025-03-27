@@ -1,7 +1,7 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 4,
   "name": "立命館大学 単位チェッカー",
-  "version": "1.3",
+  "version": "1.4",
   "description": "立命館大学の学生向け単位充足状況チェックツール",
   "permissions": ["storage"],
   "host_permissions": [
@@ -28,7 +28,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["popup.html", "popup.js", "popup.css", "icons/*", "data/*"],
+      "resources": ["popup.html", "popup.js", "popup.css", "icons/*", "data/*","welcom.html"],
       "matches": ["https://cw.ritsumei.ac.jp/*"]
     }
   ]

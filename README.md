@@ -1,6 +1,16 @@
 # college-credit-Checker
 For only Ritsumeikan Student
 
+
+> [!important]
+> ダウンロード方法は[公式サイト](https://bb-king777.github.io/college-credit-Checker/usage.html)から見ることができます。
+> 
+> https://bb-king777.github.io/college-credit-Checker/usage.html
+>
+> また、**リリースからダウンロードしたファイルは解凍したファイルの<font color="orange">一つ下のファイルを選択</font>してインストール**してください
+>
+> わからなければ、[開発者にメッセージを送ってください](https://bb-king777.github.io/my-digital-space/contact.html)
+
 > [!WARNING]
 > First Branch, Now It's only optimize for 情報理工学部　and 生命科学部
 > 

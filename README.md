@@ -1,6 +1,8 @@
 # college-credit-Checker
 For only Ritsumeikan Student
 
+[プライバシーポリシー](https://github.com/BB-KING777/college-credit-Checker/blob/main/%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC.md)
+
 
 > [!important]
 > ダウンロード方法は[公式サイト](https://bb-king777.github.io/college-credit-Checker/usage.html)から見ることができます。
